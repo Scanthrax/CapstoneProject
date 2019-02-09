@@ -1,0 +1,26 @@
+welcome greet
+Welcome to Burke Language Learning App
+
+welcome congrats
+Congratulations on starting your new and exciting journey into the world of languages
+
+select difficulty
+Please select a language difficulty
+
+beginner
+Beginner
+
+pre intermediate
+Pre Intermediate
+
+low intermediate
+Low Intermediate
+
+intermediate
+Intermediate
+
+upper intermediate
+Upper Intermediate
+
+advanced
+Advanced

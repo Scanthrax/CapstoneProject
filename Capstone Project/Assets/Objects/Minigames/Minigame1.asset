@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 20f10d943c0da464d853a0ca537d4002, type: 3}
+  m_Name: Minigame1
+  m_EditorClassIdentifier: 
+  Name: Minigame 1
+  Lesson: Actions
+  Thumbnail: {fileID: 21300000, guid: 7393720ade69dfa46b6eea37e32a4256, type: 3}
+  Scene: {fileID: 3671201678493226958, guid: bdeb93c1b5af2dc4992f3efd77105cfb, type: 3}
+  AmountOfPlayers: 4
+  TimesPlayed: 4
+  Scores: 0a0000004600000028000000
