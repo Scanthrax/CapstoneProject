@@ -63,25 +63,32 @@ public class MenuSelection : MonoBehaviour
     public struct ButtonMapping
     {
         public Menu to;
-        public Button button;
+        public Button[] button;
     }
+
+    [System.Serializable]
+    public struct MenuMapping
+    {
+        public Menu menu;
+        public RectTransform transform;
+    }
+
+    public List<MenuMapping> listOfMenus;
 
     void Start()
     {
-        Canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<RectTransform>();
 
-        // add the menus to the dictionary
-        menuDictionary.Add("Welcome", Canvas.Find("Welcome").GetComponent<RectTransform>());
-        menuDictionary.Add("GameSelect", Canvas.Find("Game Container").GetComponent<RectTransform>());
-        menuDictionary.Add("ChooseLanguage", Canvas.Find("Choose Language").GetComponent<RectTransform>());
-        menuDictionary.Add("ChooseDifficulty", Canvas.Find("Difficulty Select").GetComponent<RectTransform>());
-        menuDictionary.Add("TopicSelect", Canvas.Find("Choose Topics").GetComponent<RectTransform>());
-
-
+        foreach (var item in listOfMenus)
+        {
+            menuDictionary.Add(item.menu.ToString(), item.transform);
+        }
 
         foreach (var mapping in buttonMappings)
         {
-            mapping.button.onClick.AddListener(delegate { GoToNextMenu(mapping.to.ToString()); });
+            for (int i = 0; i < mapping.button.Length; i++)
+            {
+                mapping.button[i].onClick.AddListener(delegate { GoToNextMenu(mapping.to.ToString()); });
+            }
         }
 
         // disable all menus
@@ -92,13 +99,12 @@ public class MenuSelection : MonoBehaviour
         }
 
         // declare which menu we will be starting at
-        currentMenu = "ChooseLanguage";
+        currentMenu = Menu.ChooseLanguage.ToString();
         RectTransform startMenu = menuDictionary[currentMenu];
         // put menu at center of screen
         startMenu.gameObject.SetActive(true);
         startMenu.localPosition = new Vector2(0, 0);
 
-        StaticVariables.introScene = introScene;
 
     }
 

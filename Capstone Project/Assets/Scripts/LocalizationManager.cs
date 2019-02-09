@@ -9,7 +9,7 @@ public class LocalizationManager : MonoBehaviour {
     public static LocalizationManager instance;
 
     public Dictionary<string, string> localizedText;
-    private bool isReady = false;
+
 
 	void Awake ()
     {
@@ -33,19 +33,18 @@ public class LocalizationManager : MonoBehaviour {
 
     protected virtual void OnTextLocalized()
     {
-        if (TextLocalized != null)
-        {
-            TextLocalized(this, EventArgs.Empty);
 
-        }
+        TextLocalized(this, EventArgs.Empty);
             
     }
 
 	public void LoadLocalizedText(string fileName)
     {
         localizedText = new Dictionary<string, string>();
+
         string filePath = Application.streamingAssetsPath + @"\Localization\" + fileName;
         print(filePath);
+
         if(File.Exists(filePath))
         {
             string dataAsJson = File.ReadAllText(filePath);
@@ -61,12 +60,5 @@ public class LocalizationManager : MonoBehaviour {
         {
             print("Cannot find localization file!");
         }
-        isReady = true;
-    }
-
-    // make a property?
-    public bool GetIsReady()
-    {
-        return isReady;
     }
 }

@@ -1,0 +1,21 @@
+{
+	"items":
+	[
+		{"key":"welcome greet","value":"Welcome to Burke's Language Learning App"},
+		{"key":"welcome congrats","value":"Congratulations on starting your new and exciting journey into the world of languages"},
+
+		{"key":"select difficulty","value":"Please select a language difficulty"},
+		{"key":"beginner","value":"Beginner"},
+		{"key":"pre intermediate","value":"Pre Intermediate"},
+		{"key":"low intermediate","value":"Low Intermediate"},
+		{"key":"intermediate","value":"Intermediate"},
+		{"key":"upper intermediate","value":"Upper Intermediate"},
+		{"key":"advanced","value":"Advanced"},
+
+
+
+
+		{"key":"he ties his shoes","value":"he ties his shoes"},
+		{"key":"she brushes her hair","value":"she brushes her hair"}
+	]
+}
