@@ -6,21 +6,21 @@ public class SimpleAnimate : MonoBehaviour
 {
     public float framesPerSecond = 10;
     SpriteRenderer renderer;
-    public Sprite[] male1, male2;
 
-    public Character character;
+    public Characters character;
 
-    bool male;
+    Sprite[] anim;
+
     private void Start()
     {
         renderer = GetComponent<SpriteRenderer>();
-        male = character.character.isMale ? true : false;
+        anim = IntroSpriteManager.instance.characterDict[character].waveHandFront;
     }
 
     void Update()
     {
-        Sprite[] temp = male ? male1 : male2;
-        int index = Mathf.RoundToInt(Time.time * framesPerSecond) % temp.Length;
-        renderer.sprite = temp[index];
+        anim = IntroSpriteManager.instance.characterDict[character].waveHandFront;
+        int index = Mathf.RoundToInt(Time.time * framesPerSecond) % anim.Length;
+        renderer.sprite = anim[index];
     }
 }
