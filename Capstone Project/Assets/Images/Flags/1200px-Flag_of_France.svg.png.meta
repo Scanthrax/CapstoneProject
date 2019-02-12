@@ -1,9 +1,7 @@
 fileFormatVersion: 2
-guid: 24458e71e14badb49acebdae6e37370c
+guid: 9edc04791043ae64eaf27026fe86dcd8
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: wash_2_0
-    21300002: wash_2_1
+  fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -42,7 +40,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -84,51 +82,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: wash_2_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 650
-        height: 650
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8f16a015c5f3b6a4e967939417ccfb78
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wash_2_1
-      rect:
-        serializedVersion: 2
-        x: 650
-        y: 0
-        width: 650
-        height: 650
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c54a61904c60b534890fe3511dfb5256
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 798f40dd66e184344ac6cd5ce4274bf0
+    spriteID: 
     vertices: []
     indices: 
     edges: []

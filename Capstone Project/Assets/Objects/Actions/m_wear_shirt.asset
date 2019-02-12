@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sentence: he wears the shirt
   sprites:
-  - {fileID: 21300000, guid: 1ab96adc931ec6042943355b880d8f31, type: 3}
-  - {fileID: 21300002, guid: 1ab96adc931ec6042943355b880d8f31, type: 3}
+  - {fileID: 21300000, guid: 970daff86665f244783d6fa5ee4085dd, type: 3}
+  - {fileID: 21300002, guid: 970daff86665f244783d6fa5ee4085dd, type: 3}
   frameRate: 5

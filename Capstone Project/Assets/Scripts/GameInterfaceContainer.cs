@@ -24,8 +24,6 @@ public class GameInterfaceContainer : MonoBehaviour {
 
     public void GoToMinigame()
     {
-        SceneManager.LoadScene(StaticVariables.introScene.name);
-        StaticVariables.minigame = minigame;
-
+        MenuSelection.goToScene = minigame.Scene.name;
     }
 }

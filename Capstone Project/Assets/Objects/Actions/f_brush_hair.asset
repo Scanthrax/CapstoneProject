@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sentence: she brushes her hair
   sprites:
-  - {fileID: 21300002, guid: f6591c205e2c5ea4ebbcfd98a7d73c32, type: 3}
-  - {fileID: 21300004, guid: f6591c205e2c5ea4ebbcfd98a7d73c32, type: 3}
-  - {fileID: 21300006, guid: f6591c205e2c5ea4ebbcfd98a7d73c32, type: 3}
+  - {fileID: 21300000, guid: a851eab8c9924364db227326331ad42f, type: 3}
+  - {fileID: 21300002, guid: a851eab8c9924364db227326331ad42f, type: 3}
+  - {fileID: 21300004, guid: a851eab8c9924364db227326331ad42f, type: 3}
   frameRate: 5

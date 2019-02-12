@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuSelection : MonoBehaviour
@@ -25,13 +26,13 @@ public class MenuSelection : MonoBehaviour
     /// <summary>
     /// Directions for the menu transitions
     /// </summary>
-    public enum Direction { Left, Right, Up, Down}
+    public enum Direction { Left, Right, Up, Down }
 
 
     /// <summary>
     /// Directions for the menu transitions
     /// </summary>
-    public enum Menu { Welcome, GameSelect, ChooseLanguage, ChooseDifficulty, TopicSelect}
+    public enum Menu { Welcome, GameSelect, ChooseLanguage, ChooseDifficulty, TopicSelect }
 
     /// <summary>
     /// This dictionary keeps track of the different menus.  Feeding in a menu name will obtain the menu
@@ -75,6 +76,12 @@ public class MenuSelection : MonoBehaviour
 
     public List<MenuMapping> listOfMenus;
 
+
+    public Image fadeScreen;
+
+
+    public static string goToScene;
+
     void Start()
     {
 
@@ -100,10 +107,18 @@ public class MenuSelection : MonoBehaviour
 
         // declare which menu we will be starting at
         currentMenu = Menu.ChooseLanguage.ToString();
-        RectTransform startMenu = menuDictionary[currentMenu];
+
+        RectTransform startMenu = null;
+
+        if (menuDictionary.ContainsKey(currentMenu))
+            startMenu = menuDictionary[currentMenu];
+
         // put menu at center of screen
-        startMenu.gameObject.SetActive(true);
-        startMenu.localPosition = new Vector2(0, 0);
+        if (startMenu)
+        {
+            startMenu.gameObject.SetActive(true);
+            startMenu.localPosition = new Vector2(0, 0);
+        }
 
 
     }
@@ -197,8 +212,70 @@ public class MenuSelection : MonoBehaviour
         if (setInactive)
             obj.gameObject.SetActive(false);
 
-        
+
     }
 
-    
+
+
+
+    public void FadeOut(float duration)
+    {
+        StartCoroutine(FadeBlack(duration));
+    }
+
+
+    IEnumerator FadeBlack(float duration)
+    {
+
+        // timer for moving the menu
+        float journey = 0f;
+        // percentage of completion, used for finding position on animation curve
+        float percent = 0f;
+
+        // keep adjusting the position while there is time
+        while (journey <= duration)
+        {
+            // add to timer
+            journey = journey + Time.deltaTime;
+            // calculate percentage
+            percent = Mathf.Clamp01(journey / duration);
+            // adjust the position of the menu
+            fadeScreen.color = new Color(0f, 0f, 0f,percent);
+            // wait a frame
+            yield return null;
+        }
+        print(goToScene);
+        SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
+
+    }
+
+
+    public void FadeIn(float duration)
+    {
+        StartCoroutine(FadeClear(duration));
+    }
+
+
+    IEnumerator FadeClear(float duration)
+    {
+
+        // timer for moving the menu
+        float journey = 0f;
+        // percentage of completion, used for finding position on animation curve
+        float percent = 0f;
+
+        // keep adjusting the position while there is time
+        while (journey <= duration)
+        {
+            // add to timer
+            journey = journey + Time.deltaTime;
+            // calculate percentage
+            percent = Mathf.Clamp01(journey / duration);
+            // adjust the position of the menu
+            fadeScreen.color = new Color(0f, 0f, 0f,1 - percent);
+            // wait a frame
+            yield return null;
+        }
+
+    }
 }

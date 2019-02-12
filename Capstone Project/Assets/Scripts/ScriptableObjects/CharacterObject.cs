@@ -7,6 +7,7 @@ using UnityEngine;
 public class CharacterObject : ScriptableObject
 {
     public new string name;
-    public string nationality;
-    public bool isMale;
+    public string country;
+    public Sprite[] waveHandFront, waveHandBehind;
+    public Sprite front, behind;
 }

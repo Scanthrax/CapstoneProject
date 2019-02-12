@@ -11,19 +11,17 @@ public class LocalizationManager : MonoBehaviour {
     public Dictionary<string, string> localizedText;
 
 
-	void Awake ()
+    void Awake()
     {
-		if(instance == null)
+        if (instance)
         {
+            DestroyImmediate(this);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
             instance = this;
         }
-        else if(instance != this)
-        {
-            Destroy(this);
-        }
-
-        DontDestroyOnLoad(gameObject);
-
     }
 
 

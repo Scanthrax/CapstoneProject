@@ -1,25 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SimpleAnimate : MonoBehaviour
 {
     public float framesPerSecond = 10;
-    SpriteRenderer renderer;
+    Image renderer;
 
-    public Characters character;
+    public CharacterObject character;
 
     Sprite[] anim;
 
     private void Start()
     {
-        renderer = GetComponent<SpriteRenderer>();
-        anim = IntroSpriteManager.instance.characterDict[character].waveHandFront;
+        renderer = GetComponent<Image>();
+        anim = character.waveHandFront;
     }
 
     void Update()
     {
-        anim = IntroSpriteManager.instance.characterDict[character].waveHandFront;
         int index = Mathf.RoundToInt(Time.time * framesPerSecond) % anim.Length;
         renderer.sprite = anim[index];
     }

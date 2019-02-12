@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sentence: he ties his shoes
   sprites:
-  - {fileID: 21300000, guid: 7be234be1ffa83646b3828dc5e4806b6, type: 3}
-  - {fileID: 21300002, guid: 7be234be1ffa83646b3828dc5e4806b6, type: 3}
+  - {fileID: 21300000, guid: 79a5939fb28ba474a8f2503bfbcd446f, type: 3}
+  - {fileID: 21300002, guid: 79a5939fb28ba474a8f2503bfbcd446f, type: 3}
   frameRate: 3

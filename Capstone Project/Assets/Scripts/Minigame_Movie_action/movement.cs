@@ -15,7 +15,6 @@ public class movement : MonoBehaviour {
 
     SpriteRenderer renderer;
 
-    Controller controller;
 
     private void Start()
     {
@@ -23,7 +22,6 @@ public class movement : MonoBehaviour {
         float y = Random.Range(-1f, 1f);
         direction = new Vector2(x, y).normalized;
 
-        controller = GameObject.FindGameObjectWithTag("GameController").GetComponent<Controller>();
         renderer = GetComponent<SpriteRenderer>();
 
         SetUp();
@@ -51,6 +49,7 @@ public class movement : MonoBehaviour {
         frames = actionObj.sprites;
         framesPerSecond = actionObj.frameRate;
     }
+
     public void SetUp()
     {
         frames = actionObj.sprites;
