@@ -60,6 +60,8 @@ public class MenuSelection : MonoBehaviour
 
     public List<ButtonMapping> buttonMappings = new List<ButtonMapping>();
 
+    public AudioSource buttonTapAudioSource;
+
     [System.Serializable]
     public struct ButtonMapping
     {
@@ -120,6 +122,13 @@ public class MenuSelection : MonoBehaviour
             startMenu.localPosition = new Vector2(0, 0);
         }
 
+
+
+
+        foreach (var item in GameObject.FindObjectsOfType<Button>())
+        {
+            item.onClick.AddListener(delegate { TapButton(); });
+        }
 
     }
 
@@ -244,8 +253,11 @@ public class MenuSelection : MonoBehaviour
             // wait a frame
             yield return null;
         }
-        print(goToScene);
-        SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
+        if (goToScene != null)
+        {
+            print(goToScene);
+            SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
+        }
 
     }
 
@@ -277,5 +289,10 @@ public class MenuSelection : MonoBehaviour
             yield return null;
         }
 
+    }
+
+    public void TapButton()
+    {
+        buttonTapAudioSource.Play();
     }
 }

@@ -48,6 +48,8 @@ public class Controller : MonoBehaviour
 
     public Transform arenaContainer;
 
+    public AudioSource correctAnswerSource;
+
     private void Awake()
     {
         instance = this;
@@ -87,31 +89,36 @@ public class Controller : MonoBehaviour
         MenuSelection.instance.FadeIn(1f);
     }
 	
+
+    void PlaySoundCorrect()
+    {
+        correctAnswerSource.Play();
+    }
+
 	// Update is called once per frame
 	void Update ()
     {
 
 
-        //if(Input.GetKeyDown(KeyCode.R))
-        //{
-        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        //}
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            timer = 2f;
+        }
 
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    timer = 2f;
-        //}
+        if (recognizedNewWord)
+        {
+            recognizedNewWord = false;
+            if (wordToObject.ContainsKey(wordRecognized))
+            {
+                PlaySoundCorrect();
+                for (int i = 0; i < wordToObject[wordRecognized].Count; i++)
+                {
+                    IncreasePoints(0);
+                }
+                
+            }
 
-        //if (recognizedNewWord)
-        //{
-        //    if (wordToObject.ContainsKey(wordRecognized))
-        //    {
-        //        points[0] += RandomPosition(wordRecognized) * 10;
-
-        //        text[0].text = points[0].ToString();
-        //    }
-        //    recognizedNewWord = false;
-        //}
+        }
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
@@ -137,7 +144,8 @@ public class Controller : MonoBehaviour
         if (gameRunning)
             timer -= Time.deltaTime;
 
-        timerText.text = Mathf.RoundToInt(timer).ToString();
+        if(timerText.gameObject.activeSelf || timerText != null)
+            timerText.text = Mathf.RoundToInt(timer).ToString();
 
         if (timer <= 0f)
         {
@@ -255,13 +263,13 @@ public class Controller : MonoBehaviour
             obj.speed = speed;
             obj.actionObj = actionObjects[Random.Range(0, actionObjects.Length)];
 
-            //var sentence = obj.actionObj.sentence;
+            var sentence = obj.actionObj.sentence;
 
-            //if (!wordToObject.ContainsKey(sentence))
-            //{
-            //    wordToObject.Add(sentence, new List<GameObject>());
-            //}
-            //wordToObject[sentence].Add(obj.gameObject);
+            if (!wordToObject.ContainsKey(sentence))
+            {
+                wordToObject.Add(sentence, new List<GameObject>());
+            }
+            wordToObject[sentence].Add(obj.gameObject);
 
         }
 
