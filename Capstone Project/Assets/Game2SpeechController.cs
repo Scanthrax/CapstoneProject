@@ -10,12 +10,20 @@ using UnityEngine.UI;
 public class Game2SpeechController : MonoBehaviour
 {
 
+    public static Game2SpeechController instance;
+
     public string[] keywords;
     public ConfidenceLevel confidence = ConfidenceLevel.Low;
 
 
     KeywordRecognizer recognizer;
 
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
 
     void Start()

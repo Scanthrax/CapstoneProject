@@ -19,6 +19,7 @@ public class MenuSelection : MonoBehaviour
             Destroy(this);
         }
         DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(fadeScreen.transform.parent);
     }
 
 
@@ -54,7 +55,6 @@ public class MenuSelection : MonoBehaviour
     /// </summary>
     public float duration = 0.4f;
 
-    public Object introScene;
 
     public string currentMenu;
 
@@ -82,7 +82,11 @@ public class MenuSelection : MonoBehaviour
     public Image fadeScreen;
 
 
-    public static string goToScene;
+    public static string goToScene, goToMinigameScene;
+
+    public static string minigame1Scene, minigame2Scene, introScene, menuScene;
+
+    public static int numPlayers;
 
     void Start()
     {
@@ -129,6 +133,15 @@ public class MenuSelection : MonoBehaviour
         {
             item.onClick.AddListener(delegate { TapButton(); });
         }
+
+
+        minigame1Scene = "Game1";
+        minigame2Scene = "Game2";
+        introScene = "Introduction";
+        menuScene = "Menu";
+
+        goToScene = introScene;
+        goToMinigameScene = menuScene;
 
     }
 
@@ -253,11 +266,8 @@ public class MenuSelection : MonoBehaviour
             // wait a frame
             yield return null;
         }
-        if (goToScene != null)
-        {
-            print(goToScene);
-            SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
-        }
+
+            SceneManager.LoadScene(goToScene, LoadSceneMode.Single);
 
     }
 

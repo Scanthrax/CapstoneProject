@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Game2Controller : MonoBehaviour
 {
@@ -16,6 +17,12 @@ public class Game2Controller : MonoBehaviour
     public bool recognizedNewWord;
     public string wordRecognized;
 
+    public Dictionary<string, Vector3> wordToPosition = new Dictionary<string, Vector3>();
+
+
+    public Text timerText;
+    public float timer = 10f;
+
     private void Awake()
     {
         instance = this;
@@ -24,6 +31,12 @@ public class Game2Controller : MonoBehaviour
     private void Start()
     {
         posTracker = 0;
+
+        for (int i = 0; i < Game2SpeechController.instance.keywords.Length-1; i++)
+        {
+            if(Game2SpeechController.instance.keywords[i] != null || positions[i].position != null)
+                wordToPosition.Add(Game2SpeechController.instance.keywords[i], positions[i].position);
+        }
     }
 
 
@@ -32,19 +45,15 @@ public class Game2Controller : MonoBehaviour
         if(recognizedNewWord)
         {
             recognizedNewWord = false;
-
-            switch(wordRecognized)
-            {
-                case "one":
-                    arrow.position = positions[0].position;
-                    break;
-                case "two":
-                    arrow.position = positions[1].position;
-                    break;
-                case "three":
-                    arrow.position = positions[2].position;
-                    break;
-            }
+            arrow.position = wordToPosition[wordRecognized];
         }
+
+        timer -= Time.deltaTime;
+
+        if (timer <= 0f)
+            timer = 10f;
+
+        timerText.text = Mathf.CeilToInt(timer).ToString();
+
     }
 }

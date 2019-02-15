@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class IntroController : MonoBehaviour
@@ -26,12 +27,13 @@ public class IntroController : MonoBehaviour
 
     public AnimationCurve sweepCurve;
 
-    public Image fadeScreen;
 
     public RectTransform container;
 
     private void Start()
     {
+        amountOfCharacters = MenuSelection.numPlayers;
+
         listOfScreens = new RectTransform[amountOfCharacters + 1];
 
 
@@ -49,8 +51,6 @@ public class IntroController : MonoBehaviour
 
         if(MenuSelection.instance)
         {
-
-            MenuSelection.instance.fadeScreen = fadeScreen;
             MenuSelection.instance.FadeIn(1f);
         }
     }
@@ -76,42 +76,15 @@ public class IntroController : MonoBehaviour
             if (action < listOfScreens.Length)
                 GoToNextMenu();
             else if (action == listOfScreens.Length)
-                FadeOut(1f);
+            {
+                MenuSelection.instance.FadeOut(1f);
+                MenuSelection.goToScene = MenuSelection.goToMinigameScene;
+            }
 
         }
 
     }
 
-
-
-    public void FadeOut(float duration)
-    {
-        StartCoroutine(FadeBlack(duration));
-    }
-
-
-    IEnumerator FadeBlack(float duration)
-    {
-
-        // timer for moving the menu
-        float journey = 0f;
-        // percentage of completion, used for finding position on animation curve
-        float percent = 0f;
-
-        // keep adjusting the position while there is time
-        while (journey <= duration)
-        {
-            // add to timer
-            journey = journey + Time.deltaTime;
-            // calculate percentage
-            percent = Mathf.Clamp01(journey / duration);
-            // adjust the position of the menu
-            fadeScreen.color = new Color(0f, 0f, 0f, percent);
-            // wait a frame
-            yield return null;
-        }
-
-    }
 
 
 

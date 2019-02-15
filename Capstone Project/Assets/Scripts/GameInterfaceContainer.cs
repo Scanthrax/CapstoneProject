@@ -24,6 +24,8 @@ public class GameInterfaceContainer : MonoBehaviour {
 
     public void GoToMinigame()
     {
-        MenuSelection.goToScene = minigame.Scene.name;
+        MenuSelection.goToScene = MenuSelection.introScene;
+        MenuSelection.numPlayers = minigame.AmountOfPlayers;
+        MenuSelection.goToMinigameScene = minigame.Scene.name;
     }
 }

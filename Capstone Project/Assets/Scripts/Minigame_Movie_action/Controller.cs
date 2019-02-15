@@ -50,9 +50,16 @@ public class Controller : MonoBehaviour
 
     public AudioSource correctAnswerSource;
 
+
+    public Image fadeScreen;
+
     private void Awake()
     {
         instance = this;
+
+
+
+
     }
 
 
@@ -86,7 +93,10 @@ public class Controller : MonoBehaviour
         InitGame();
 
 
-        MenuSelection.instance.FadeIn(1f);
+        if (MenuSelection.instance)
+        {
+            MenuSelection.instance.FadeIn(1f);
+        }
     }
 	
 
@@ -227,6 +237,8 @@ public class Controller : MonoBehaviour
         timerText.gameObject.SetActive(false);
         startText.gameObject.SetActive(true);
         startText.GetComponent<Text>().text = "Finish!";
+        MenuSelection.goToScene = MenuSelection.menuScene;
+
         //StaticVariables.minigame.Scores.Add(points[0]);
         //SceneManager.LoadScene(menuScene.name);
     }
