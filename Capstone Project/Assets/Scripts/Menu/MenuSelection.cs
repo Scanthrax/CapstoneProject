@@ -131,6 +131,9 @@ public class MenuSelection : MonoBehaviour
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 5440228... push 2/15
+=======
 >>>>>>> parent of 5440228... push 2/15
 =======
 >>>>>>> parent of 5440228... push 2/15
@@ -259,9 +262,12 @@ public class MenuSelection : MonoBehaviour
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         print(goToScene);
         SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
 =======
+=======
+>>>>>>> parent of 5440228... push 2/15
 =======
 >>>>>>> parent of 5440228... push 2/15
         if (goToScene != null)
@@ -270,6 +276,9 @@ public class MenuSelection : MonoBehaviour
             SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 5440228... push 2/15
+=======
 >>>>>>> parent of 5440228... push 2/15
 =======
 >>>>>>> parent of 5440228... push 2/15
