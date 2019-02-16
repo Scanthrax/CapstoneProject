@@ -1,10 +1,13 @@
-﻿
+﻿/*
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
 using UnityEngine.UI;
+
+
+
 
 public struct Sentence
 {
@@ -59,14 +62,23 @@ public class SpeechController : MonoBehaviour {
     string[] keywords;
     public ConfidenceLevel confidence = ConfidenceLevel.Low;
 
+    public float speed = 1;
+
+    public GameObject target;
+    public Text results;
 
     KeywordRecognizer recognizer;
+
+    public int amountOfWords = 4;
+    public int wordPosition = 0;
+
+    public Sentence formingSentence;
 
     
 
     void Start ()
     {
-        //if there are action objects, make an array of strings
+        // if there are action objects, make an array of strings
         if (Controller.instance.actionObjects.Length > 0)
         {
             keywords = new string[Controller.instance.actionObjects.Length];
@@ -81,8 +93,9 @@ public class SpeechController : MonoBehaviour {
             recognizer.OnPhraseRecognized += Recognizer_OnPhraseRecognized;
             recognizer.Start();
         }
-        else
-            print("NO KEYWORDS");
+
+
+        formingSentence = new Sentence(1);
     }
 
 
@@ -98,12 +111,14 @@ public class SpeechController : MonoBehaviour {
 
     private void Recognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
-        //translates the result into text
+        // translates the result into text
         var word = args.text;
+
+
 
         Controller.instance.recognizedNewWord = true;
         Controller.instance.wordRecognized = word;
-
-        print("Recognized: " + word);
     }
 }
+
+*/

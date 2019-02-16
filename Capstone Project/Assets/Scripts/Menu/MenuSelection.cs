@@ -19,7 +19,6 @@ public class MenuSelection : MonoBehaviour
             Destroy(this);
         }
         DontDestroyOnLoad(gameObject);
-        DontDestroyOnLoad(fadeScreen.transform.parent);
     }
 
 
@@ -55,12 +54,11 @@ public class MenuSelection : MonoBehaviour
     /// </summary>
     public float duration = 0.4f;
 
+    public Object introScene;
 
     public string currentMenu;
 
     public List<ButtonMapping> buttonMappings = new List<ButtonMapping>();
-
-    public AudioSource buttonTapAudioSource;
 
     [System.Serializable]
     public struct ButtonMapping
@@ -82,11 +80,7 @@ public class MenuSelection : MonoBehaviour
     public Image fadeScreen;
 
 
-    public static string goToScene, goToMinigameScene;
-
-    public static string minigame1Scene, minigame2Scene, introScene, menuScene;
-
-    public static int numPlayers;
+    public static string goToScene;
 
     void Start()
     {
@@ -127,6 +121,8 @@ public class MenuSelection : MonoBehaviour
         }
 
 
+<<<<<<< HEAD
+=======
 
 
         foreach (var item in GameObject.FindObjectsOfType<Button>())
@@ -134,15 +130,13 @@ public class MenuSelection : MonoBehaviour
             item.onClick.AddListener(delegate { TapButton(); });
         }
 
-
-        minigame1Scene = "Game1";
-        minigame2Scene = "Game2";
-        introScene = "Introduction";
-        menuScene = "Menu";
-
-        goToScene = introScene;
-        goToMinigameScene = menuScene;
-
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 5440228... push 2/15
+=======
+>>>>>>> parent of 5440228... push 2/15
+=======
+>>>>>>> parent of 5440228... push 2/15
     }
 
 
@@ -266,8 +260,28 @@ public class MenuSelection : MonoBehaviour
             // wait a frame
             yield return null;
         }
-
-            SceneManager.LoadScene(goToScene, LoadSceneMode.Single);
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+        print(goToScene);
+        SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
+=======
+=======
+>>>>>>> parent of 5440228... push 2/15
+=======
+>>>>>>> parent of 5440228... push 2/15
+        if (goToScene != null)
+        {
+            print(goToScene);
+            SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
+        }
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 5440228... push 2/15
+=======
+>>>>>>> parent of 5440228... push 2/15
+=======
+>>>>>>> parent of 5440228... push 2/15
 
     }
 
@@ -299,10 +313,5 @@ public class MenuSelection : MonoBehaviour
             yield return null;
         }
 
-    }
-
-    public void TapButton()
-    {
-        buttonTapAudioSource.Play();
     }
 }
