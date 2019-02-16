@@ -52,6 +52,9 @@ public class Controller : MonoBehaviour
 =======
     public AudioSource correctAnswerSource;
 
+<<<<<<< HEAD
+>>>>>>> parent of 5440228... push 2/15
+=======
 >>>>>>> parent of 5440228... push 2/15
     private void Awake()
     {

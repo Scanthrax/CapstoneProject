@@ -850,6 +850,9 @@ GameObject:
 =======
   - component: {fileID: 563233881}
   - component: {fileID: 563233880}
+<<<<<<< HEAD
+>>>>>>> parent of 5440228... push 2/15
+=======
 >>>>>>> parent of 5440228... push 2/15
   - component: {fileID: 563233878}
   - component: {fileID: 563233880}
@@ -902,6 +905,9 @@ MonoBehaviour:
 <<<<<<< HEAD
 =======
   correctAnswerSource: {fileID: 2129648281}
+<<<<<<< HEAD
+>>>>>>> parent of 5440228... push 2/15
+=======
 >>>>>>> parent of 5440228... push 2/15
 --- !u!4 &563233879
 Transform:
@@ -919,7 +925,10 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &563233880
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 5440228... push 2/15
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2170,7 +2179,10 @@ CanvasRenderer:
   m_CullTransparentMesh: 0
 --- !u!1 &1939584141
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 5440228... push 2/15
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -130,6 +130,9 @@ public class MenuSelection : MonoBehaviour
             item.onClick.AddListener(delegate { TapButton(); });
         }
 
+<<<<<<< HEAD
+>>>>>>> parent of 5440228... push 2/15
+=======
 >>>>>>> parent of 5440228... push 2/15
     }
 
@@ -255,14 +258,20 @@ public class MenuSelection : MonoBehaviour
             yield return null;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         print(goToScene);
         SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
 =======
+=======
+>>>>>>> parent of 5440228... push 2/15
         if (goToScene != null)
         {
             print(goToScene);
             SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
         }
+<<<<<<< HEAD
+>>>>>>> parent of 5440228... push 2/15
+=======
 >>>>>>> parent of 5440228... push 2/15
 
     }
