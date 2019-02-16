@@ -53,9 +53,6 @@ public class Controller : MonoBehaviour
     public AudioSource correctAnswerSource;
 
 <<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 5440228... push 2/15
-=======
 >>>>>>> parent of 5440228... push 2/15
 =======
 >>>>>>> parent of 5440228... push 2/15
