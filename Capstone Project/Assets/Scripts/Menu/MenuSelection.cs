@@ -121,6 +121,16 @@ public class MenuSelection : MonoBehaviour
         }
 
 
+<<<<<<< HEAD
+=======
+
+
+        foreach (var item in GameObject.FindObjectsOfType<Button>())
+        {
+            item.onClick.AddListener(delegate { TapButton(); });
+        }
+
+>>>>>>> parent of 5440228... push 2/15
     }
 
 
@@ -244,8 +254,16 @@ public class MenuSelection : MonoBehaviour
             // wait a frame
             yield return null;
         }
+<<<<<<< HEAD
         print(goToScene);
         SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
+=======
+        if (goToScene != null)
+        {
+            print(goToScene);
+            SceneManager.LoadScene("Introduction", LoadSceneMode.Single);
+        }
+>>>>>>> parent of 5440228... push 2/15
 
     }
 

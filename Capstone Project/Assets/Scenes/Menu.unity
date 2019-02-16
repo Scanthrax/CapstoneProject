@@ -2142,7 +2142,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1864185907}
+<<<<<<< HEAD
   m_RootOrder: 7
+=======
+  m_RootOrder: 6
+>>>>>>> parent of 5440228... push 2/15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2439,6 +2443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textTag: upper intermediate
+<<<<<<< HEAD
 --- !u!1 &731412903
 GameObject:
   m_ObjectHideFlags: 0
@@ -2483,6 +2488,8 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+=======
+>>>>>>> parent of 5440228... push 2/15
 --- !u!1 &742792463
 GameObject:
   m_ObjectHideFlags: 0
@@ -3454,6 +3461,7 @@ MonoBehaviour:
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   m_Navigation:
     m_Mode: 3
     m_SelectOnUp: {fileID: 0}
@@ -3486,6 +3494,68 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &981225132
 MonoBehaviour:
+=======
+  menuSweepCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  duration: 0.4
+  introScene: {fileID: 102900000, guid: c3916c8e51e163e40addaf026569e8e3, type: 3}
+  currentMenu: 
+  buttonMappings:
+  - to: 3
+    button:
+    - {fileID: 175621750}
+    - {fileID: 1875614722}
+    - {fileID: 815556602}
+  - to: 0
+    button:
+    - {fileID: 352937220}
+    - {fileID: 859188583}
+    - {fileID: 356817949}
+    - {fileID: 1055429788}
+    - {fileID: 742792465}
+    - {fileID: 1740308109}
+  - to: 2
+    button:
+    - {fileID: 1555051384}
+  - to: 1
+    button:
+    - {fileID: 654052018}
+  buttonTapAudioSource: {fileID: 1444127123}
+  listOfMenus:
+  - menu: 0
+    transform: {fileID: 1352904339}
+  - menu: 2
+    transform: {fileID: 44028165}
+  - menu: 3
+    transform: {fileID: 525542790}
+  - menu: 1
+    transform: {fileID: 1542139192}
+  fadeScreen: {fileID: 581344403}
+--- !u!4 &1088025364
+Transform:
+>>>>>>> parent of 5440228... push 2/15
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
