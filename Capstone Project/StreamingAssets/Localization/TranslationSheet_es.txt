@@ -1,0 +1,81 @@
+English phrase:
+Welcome to Burke's Language Learning App
+
+Translated phrase:
+Bienvenido a la aplicación de aprendizaje de idiomas de Burke
+
+Corrections:
+
+__________________________________________________________________________
+English phrase:
+Congratulations on starting your new and exciting journey into the world of languages
+
+Translated phrase:
+Felicitaciones por comenzar tu nuevo y emocionante viaje al mundo de los idiomas
+
+Corrections:
+
+__________________________________________________________________________
+English phrase:
+Please select a language difficulty
+
+Translated phrase:
+Por favor seleccione una dificultad de idioma
+
+Corrections:
+
+__________________________________________________________________________
+English phrase:
+Beginner
+
+Translated phrase:
+Principiante
+
+Corrections:
+
+__________________________________________________________________________
+English phrase:
+Pre Intermediate
+
+Translated phrase:
+Pre Intermedio
+
+Corrections:
+
+__________________________________________________________________________
+English phrase:
+Low Intermediate
+
+Translated phrase:
+Intermedio bajo
+
+Corrections:
+
+__________________________________________________________________________
+English phrase:
+Intermediate
+
+Translated phrase:
+Intermedio
+
+Corrections:
+
+__________________________________________________________________________
+English phrase:
+Upper Intermediate
+
+Translated phrase:
+Intermedio superior
+
+Corrections:
+
+__________________________________________________________________________
+English phrase:
+Advanced
+
+Translated phrase:
+Avanzado
+
+Corrections:
+
+__________________________________________________________________________

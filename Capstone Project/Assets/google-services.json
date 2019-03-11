@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "889305399993",
+    "firebase_url": "https://burkeslanguagelearning.firebaseio.com",
+    "project_id": "burkeslanguagelearning",
+    "storage_bucket": "burkeslanguagelearning.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889305399993:android:f3bca6135e3ea6c7",
+        "android_client_info": {
+          "package_name": "com.ctnoble.BurkesLanguageLearning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889305399993-uhpebinbko7kaanej247gnutsem6qbrh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIn2sQWx0KNp5MHaIczGC7GGmO45jNhUY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
