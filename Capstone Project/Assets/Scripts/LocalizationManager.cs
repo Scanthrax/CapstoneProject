@@ -19,20 +19,19 @@ public class LocalizationManager : MonoBehaviour {
         }
         else
         {
-            DontDestroyOnLoad(gameObject);
             instance = this;
         }
     }
 
 
-    public delegate void LocalizationEventHandler(object source, EventArgs args);
+    public delegate void LocalizationEventHandler(object source);
     public static event LocalizationEventHandler TextLocalized;
 
 
     protected virtual void OnTextLocalized()
     {
-
-        TextLocalized(this, EventArgs.Empty);
+        if(TextLocalized != null)
+            TextLocalized(this);
             
     }
 
@@ -53,6 +52,7 @@ public class LocalizationManager : MonoBehaviour {
             }
             print("Data loaded, dictionary contains " + localizedText.Count + " entries");
             OnTextLocalized();
+            if(MenuSelection.instance.test.menu.ToString() == "ChooseLanguage") MenuSelection.instance.SetMenuStart(MenuSelection.Menu.ChooseDifficulty, fileName);
         }
         else
         {

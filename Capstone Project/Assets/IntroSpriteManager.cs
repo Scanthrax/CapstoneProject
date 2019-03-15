@@ -42,7 +42,6 @@ public class IntroSpriteManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        DontDestroyOnLoad(gameObject);
 
 
 

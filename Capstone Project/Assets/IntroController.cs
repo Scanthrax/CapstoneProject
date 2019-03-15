@@ -32,7 +32,8 @@ public class IntroController : MonoBehaviour
 
     private void Start()
     {
-        amountOfCharacters = MenuSelection.numPlayers;
+
+        //amountOfCharacters = MenuSelection.numPlayers;
 
         listOfScreens = new RectTransform[amountOfCharacters + 1];
 
@@ -53,6 +54,10 @@ public class IntroController : MonoBehaviour
         {
             MenuSelection.instance.FadeIn(1f);
         }
+        action = 0;
+
+
+
     }
 
 
@@ -75,11 +80,6 @@ public class IntroController : MonoBehaviour
 
             if (action < listOfScreens.Length)
                 GoToNextMenu();
-            else if (action == listOfScreens.Length)
-            {
-                MenuSelection.instance.FadeOut(1f);
-                MenuSelection.goToScene = MenuSelection.goToMinigameScene;
-            }
 
         }
 

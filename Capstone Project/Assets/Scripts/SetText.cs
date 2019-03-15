@@ -20,7 +20,7 @@ public class SetText : MonoBehaviour
     }
 
 
-    public void Localize(object source, EventArgs args)
+    public void Localize(object source)
     {
         if (!LocalizationManager.instance.localizedText.ContainsKey(textTag))
             print("error " + text);

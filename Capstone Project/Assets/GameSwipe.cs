@@ -112,6 +112,8 @@ public class GameSwipe : MonoBehaviour
         {
             MoveMenus(uiPanels[i], true);
         }
+
+        SelectedMinigame(node.Value);
     }
 
     public void SwipeRight()
@@ -260,6 +262,13 @@ public class GameSwipe : MonoBehaviour
         panel.amtOfPlayers.text = "Players: " + panel.minigame.AmountOfPlayers.ToString();
         panel.titleOfGame.text =  panel.minigame.Name;
         panel.image.sprite = panel.minigame.Thumbnail;
+    }
+
+    void SelectedMinigame(MinigameObject minigame)
+    {
+        MenuSelection.goToScene = MenuSelection.introScene;
+        MenuSelection.numPlayers = minigame.AmountOfPlayers;
+        MenuSelection.goToMinigameScene = minigame.Scene.name;
     }
 
 }

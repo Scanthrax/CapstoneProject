@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Minigame 4
   Lesson: Actions
-  Thumbnail: {fileID: 21300000, guid: 1037686c9ae0b9d4fb7d750456631a79, type: 3}
-  Scene: {fileID: 0}
+  Thumbnail: {fileID: 21300000, guid: 5e825bf15c5f2374bb77584be93b54f9, type: 3}
+  Scene: {fileID: 102900000, guid: 9d8f250d0a85445bada3571b57c1cbda, type: 3}
   AmountOfPlayers: 2
   TimesPlayed: 5
   Scores: 000000005a0000006400000014000000

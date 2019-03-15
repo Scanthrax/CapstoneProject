@@ -18,8 +18,6 @@ public class MenuSelection : MonoBehaviour
         {
             Destroy(this);
         }
-        DontDestroyOnLoad(gameObject);
-        DontDestroyOnLoad(fadeScreen.transform.parent);
     }
 
 
@@ -33,7 +31,7 @@ public class MenuSelection : MonoBehaviour
     /// <summary>
     /// Directions for the menu transitions
     /// </summary>
-    public enum Menu { Welcome, GameSelect, ChooseLanguage, ChooseDifficulty, TopicSelect }
+    public enum Menu { Welcome, GameSelect, ChooseLanguage, ChooseDifficulty, TopicSelect, None, Login, CharacterSelect}
 
     /// <summary>
     /// This dictionary keeps track of the different menus.  Feeding in a menu name will obtain the menu
@@ -65,7 +63,8 @@ public class MenuSelection : MonoBehaviour
     [System.Serializable]
     public struct ButtonMapping
     {
-        public Menu to;
+        public Menu menu;
+        public RectTransform transform;
         public Button[] button;
     }
 
@@ -76,22 +75,34 @@ public class MenuSelection : MonoBehaviour
         public RectTransform transform;
     }
 
-    public List<MenuMapping> listOfMenus;
-
 
     public Image fadeScreen;
 
 
     public static string goToScene, goToMinigameScene;
 
-    public static string minigame1Scene, minigame2Scene, introScene, menuScene;
+    public static string introScene, menuScene;
 
     public static int numPlayers;
 
+
+
+    public TestObject test;
+
     void Start()
     {
+        if (test.localizationFile != "")
+        {
+            currentMenu = test.menu.ToString();
+            LocalizationManager.instance.LoadLocalizedText(test.localizationFile);
+        }
+        else
+        {
+            currentMenu = Menu.ChooseLanguage.ToString();
+        }
 
-        foreach (var item in listOfMenus)
+
+        foreach (var item in buttonMappings)
         {
             menuDictionary.Add(item.menu.ToString(), item.transform);
         }
@@ -100,19 +111,19 @@ public class MenuSelection : MonoBehaviour
         {
             for (int i = 0; i < mapping.button.Length; i++)
             {
-                mapping.button[i].onClick.AddListener(delegate { GoToNextMenu(mapping.to.ToString()); });
+                mapping.button[i].onClick.AddListener(delegate { GoToNextMenu(mapping.menu.ToString()); });
             }
         }
 
         // disable all menus
         foreach (KeyValuePair<string, RectTransform> entry in menuDictionary)
         {
-            entry.Value.gameObject.SetActive(true);
+            entry.Value.gameObject.SetActive(false);
             entry.Value.localPosition = new Vector2(0, 1334);
         }
 
         // declare which menu we will be starting at
-        currentMenu = Menu.ChooseLanguage.ToString();
+        
 
         RectTransform startMenu = null;
 
@@ -135,13 +146,13 @@ public class MenuSelection : MonoBehaviour
         }
 
 
-        minigame1Scene = "Game1";
-        minigame2Scene = "Game2";
         introScene = "Introduction";
         menuScene = "Menu";
 
         goToScene = introScene;
         goToMinigameScene = menuScene;
+
+
 
     }
 
@@ -267,7 +278,7 @@ public class MenuSelection : MonoBehaviour
             yield return null;
         }
 
-            SceneManager.LoadScene(goToScene, LoadSceneMode.Single);
+            SceneManager.LoadScene(goToScene, LoadSceneMode.Additive);
 
     }
 
@@ -305,4 +316,12 @@ public class MenuSelection : MonoBehaviour
     {
         buttonTapAudioSource.Play();
     }
+
+    public void SetMenuStart(Menu menu, string loc)
+    {
+        test.menu = menu;
+        test.localizationFile = loc;
+    }
+
+
 }
