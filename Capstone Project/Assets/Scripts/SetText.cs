@@ -26,6 +26,7 @@ public class SetText : MonoBehaviour
             print("error " + text);
         else
             text.text = LocalizationManager.instance.localizedText[textTag];
+
     }
 
 

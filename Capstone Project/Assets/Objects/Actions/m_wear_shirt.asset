@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db330ef39f55da4a90b7cd80053f2aa, type: 3}
   m_Name: m_wear_shirt
   m_EditorClassIdentifier: 
-  sentence: he wears the shirt
+  presentSimpleSentence: he wears his shirt
+  commandSentence: wear your shirt
+  negateSentence: don't wear your shirt
   sprites:
-  - {fileID: 21300000, guid: 970daff86665f244783d6fa5ee4085dd, type: 3}
-  - {fileID: 21300002, guid: 970daff86665f244783d6fa5ee4085dd, type: 3}
+  - {fileID: 21300000, guid: f70ce5a479a964844af24476c935297a, type: 3}
+  - {fileID: 21300002, guid: f70ce5a479a964844af24476c935297a, type: 3}
   frameRate: 5

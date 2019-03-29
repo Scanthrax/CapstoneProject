@@ -6,11 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Action", menuName = "Action")]
 public class ActionObject : ScriptableObject
 {
-    public string sentence;
+    public string presentSimpleSentence;
+    public string commandSentence;
+    public string negateSentence;
     SpriteRenderer renderer;
     public Sprite[] sprites;
     public float frameRate;
 
-    public string demandSentence;
-    public string negateSentence;
+
 }

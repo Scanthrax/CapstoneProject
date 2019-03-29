@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using Utility;
 
 public class LocalizationManager : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class LocalizationManager : MonoBehaviour {
 
     public Dictionary<string, string> localizedText;
 
+    string fileName;
 
     void Awake()
     {
@@ -35,8 +37,15 @@ public class LocalizationManager : MonoBehaviour {
             
     }
 
-	public void LoadLocalizedText(string fileName)
+	public void LoadLocalizedText()
     {
+        foreach (KeyValuePair<MenuSelection.Menu, RectTransform> entry in MenuSelection.instance.menuDictionary)
+        {
+            entry.Value.gameObject.SetActive(true);
+        }
+
+
+
         localizedText = new Dictionary<string, string>();
 
         string filePath = Application.streamingAssetsPath + @"\Localization\" + fileName;
@@ -52,11 +61,26 @@ public class LocalizationManager : MonoBehaviour {
             }
             print("Data loaded, dictionary contains " + localizedText.Count + " entries");
             OnTextLocalized();
-            if(MenuSelection.instance.test.menu.ToString() == "ChooseLanguage") MenuSelection.instance.SetMenuStart(MenuSelection.Menu.ChooseDifficulty, fileName);
+            //if(MenuSelection.instance.test.menu.ToString() == "ChooseLanguage") MenuSelection.instance.SetMenuStart(MenuSelection.Menu.ChooseDifficulty, fileName);
         }
         else
         {
             print("Cannot find localization file!");
         }
+
+        foreach (KeyValuePair<MenuSelection.Menu, RectTransform> entry in MenuSelection.instance.menuDictionary)
+        {
+            entry.Value.gameObject.SetActive(false);
+        }
+        MenuSelection.instance.menuDictionary[MenuSelection.instance.currentMenu].gameObject.SetActive(true);
+
+    }
+
+
+    public void SetFileName(string name)
+    {
+        fileName = name;
+
+        LoadLocalizedText();
     }
 }

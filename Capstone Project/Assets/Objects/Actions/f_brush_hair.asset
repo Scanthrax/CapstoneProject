@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db330ef39f55da4a90b7cd80053f2aa, type: 3}
   m_Name: f_brush_hair
   m_EditorClassIdentifier: 
-  sentence: she brushes her hair
-  sprites:
-  - {fileID: 21300000, guid: a851eab8c9924364db227326331ad42f, type: 3}
-  - {fileID: 21300002, guid: a851eab8c9924364db227326331ad42f, type: 3}
-  - {fileID: 21300004, guid: a851eab8c9924364db227326331ad42f, type: 3}
-  frameRate: 5
-  demandSentence: brush your hair
+  presentSimpleSentence: she brushes her hair
+  commandSentence: brush your hair
   negateSentence: don't brush your hair
+  sprites:
+  - {fileID: 21300000, guid: d735479dbf926c24c8d65d7e1efce84b, type: 3}
+  - {fileID: 21300002, guid: d735479dbf926c24c8d65d7e1efce84b, type: 3}
+  - {fileID: 21300004, guid: d735479dbf926c24c8d65d7e1efce84b, type: 3}
+  frameRate: 5

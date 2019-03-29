@@ -132,7 +132,7 @@ public class Controller : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            RandomPosition(actionObjects[0].sentence);
+            RandomPosition(actionObjects[0].presentSimpleSentence);
         }
 
         if (Input.GetKeyDown(KeyCode.X))
@@ -214,14 +214,14 @@ public class Controller : MonoBehaviour
 
             item.transform.position = new Vector3(x,y);
 
-            var temp = item.GetComponent<movement>().actionObj.sentence;
+            var temp = item.GetComponent<movement>().actionObj.presentSimpleSentence;
 
 
             wordToObject[temp].Remove(item);
 
             item.GetComponent<movement>().SetUp(actionObjects[Random.Range(0,actionObjects.Length)]);
 
-            temp = item.GetComponent<movement>().actionObj.sentence;
+            temp = item.GetComponent<movement>().actionObj.presentSimpleSentence;
 
             wordToObject[temp].Add(item);
         }
@@ -275,7 +275,7 @@ public class Controller : MonoBehaviour
             obj.speed = speed;
             obj.actionObj = actionObjects[Random.Range(0, actionObjects.Length)];
 
-            var sentence = obj.actionObj.sentence;
+            var sentence = obj.actionObj.presentSimpleSentence;
 
             if (!wordToObject.ContainsKey(sentence))
             {

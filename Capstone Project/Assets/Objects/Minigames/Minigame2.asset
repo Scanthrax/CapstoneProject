@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f10d943c0da464d853a0ca537d4002, type: 3}
   m_Name: Minigame2
   m_EditorClassIdentifier: 
+  minigame: 1
+  topic: 1
   Name: Minigame 2
   Lesson: Actions
   Thumbnail: {fileID: 21300000, guid: 5e825bf15c5f2374bb77584be93b54f9, type: 3}

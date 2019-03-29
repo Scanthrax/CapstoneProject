@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f0a625eb76df5459b889c862fe81e6, type: 3}
   m_Name: test
   m_EditorClassIdentifier: 
-  menu: 6
+  menu: 2
   localizationFile: loc_es.json

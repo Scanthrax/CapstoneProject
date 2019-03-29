@@ -31,12 +31,16 @@ public class MenuSelection : MonoBehaviour
     /// <summary>
     /// Directions for the menu transitions
     /// </summary>
-    public enum Menu { Welcome, GameSelect, ChooseLanguage, ChooseDifficulty, TopicSelect, None, Login, CharacterSelect}
+    public enum Menu { Welcome, GameSelect, ChooseLanguage, ChooseDifficulty, TopicSelect, None, Login, CharacterSelect, VocabReview, Intro, MinigameLobby }
+
+
+    public enum Language { None, English, Spanish, French }
+
 
     /// <summary>
     /// This dictionary keeps track of the different menus.  Feeding in a menu name will obtain the menu
     /// </summary>
-    public Dictionary<string, RectTransform> menuDictionary = new Dictionary<string, RectTransform>();
+    public Dictionary<Menu, RectTransform> menuDictionary = new Dictionary<Menu, RectTransform>();
 
     /// <summary>
     /// This curve controls the sweeping motion between menu transitions
@@ -54,7 +58,7 @@ public class MenuSelection : MonoBehaviour
     public float duration = 0.4f;
 
 
-    public string currentMenu;
+    public Menu currentMenu;
 
     public List<ButtonMapping> buttonMappings = new List<ButtonMapping>();
 
@@ -87,48 +91,61 @@ public class MenuSelection : MonoBehaviour
 
 
 
-    public TestObject test;
+    public GameObject languageContinueButton;
+
+
+
+
+    [Header("Static variables")]
+    public Menu startingMenu;
+
+    public CharacterObject userCharacter;
+
+
+    [Header("Dynamic variables")]
+    public Language nativeLanguage;
+    public Language learningLanguage;
+    public MinigameObject selectedMinigame;
+
+
+
+    [Header("Vocab review")]
+    public Text tilte;
+    public Text topic;
+    public Text scores;
+
 
     void Start()
     {
-        if (test.localizationFile != "")
-        {
-            currentMenu = test.menu.ToString();
-            LocalizationManager.instance.LoadLocalizedText(test.localizationFile);
-        }
-        else
-        {
-            currentMenu = Menu.ChooseLanguage.ToString();
-        }
-
 
         foreach (var item in buttonMappings)
         {
-            menuDictionary.Add(item.menu.ToString(), item.transform);
+            menuDictionary.Add(item.menu, item.transform);
         }
 
         foreach (var mapping in buttonMappings)
         {
             for (int i = 0; i < mapping.button.Length; i++)
             {
-                mapping.button[i].onClick.AddListener(delegate { GoToNextMenu(mapping.menu.ToString()); });
+                mapping.button[i].onClick.AddListener(delegate { GoToNextMenu(mapping.menu); });
             }
         }
 
         // disable all menus
-        foreach (KeyValuePair<string, RectTransform> entry in menuDictionary)
+        foreach (KeyValuePair<Menu, RectTransform> entry in menuDictionary)
         {
             entry.Value.gameObject.SetActive(false);
             entry.Value.localPosition = new Vector2(0, 1334);
         }
 
+
         // declare which menu we will be starting at
-        
+
 
         RectTransform startMenu = null;
 
-        if (menuDictionary.ContainsKey(currentMenu))
-            startMenu = menuDictionary[currentMenu];
+        if (menuDictionary.ContainsKey(startingMenu))
+            startMenu = menuDictionary[startingMenu];
 
         // put menu at center of screen
         if (startMenu)
@@ -146,11 +163,16 @@ public class MenuSelection : MonoBehaviour
         }
 
 
+        currentMenu = startingMenu;
+
         introScene = "Introduction";
         menuScene = "Menu";
 
         goToScene = introScene;
         goToMinigameScene = menuScene;
+
+
+        languageContinueButton.SetActive(false);
 
 
 
@@ -160,7 +182,7 @@ public class MenuSelection : MonoBehaviour
 
 
 
-    public void GoToNextMenu(string menu)
+    public void GoToNextMenu(Menu menu)
     {
         MoveMenus(currentMenu, true);
         MoveMenus(menu, false);
@@ -172,12 +194,12 @@ public class MenuSelection : MonoBehaviour
     /// </summary>
     /// <param name="obj">The menu to move</param>
     /// <param name="setInactive">Do we set the menu as inactive after transitioning?</param>
-    void MoveMenus(string menu, bool setInactive)
+    void MoveMenus(Menu menu, bool setInactive)
     {
         StartCoroutine(AnimateMove(menu, setInactive));
     }
 
-    IEnumerator AnimateMove(string menu, bool setInactive)
+    IEnumerator AnimateMove(Menu menu, bool setInactive)
     {
         RectTransform obj = menuDictionary[menu];
 
@@ -273,12 +295,13 @@ public class MenuSelection : MonoBehaviour
             // calculate percentage
             percent = Mathf.Clamp01(journey / duration);
             // adjust the position of the menu
-            fadeScreen.color = new Color(0f, 0f, 0f,percent);
+            fadeScreen.color = new Color(0f, 0f, 0f, percent);
             // wait a frame
             yield return null;
         }
 
-            SceneManager.LoadScene(goToScene, LoadSceneMode.Additive);
+        IntroController.instance.enabled = true;
+        //SceneManager.LoadScene(goToScene, LoadSceneMode.Additive);
 
     }
 
@@ -305,7 +328,7 @@ public class MenuSelection : MonoBehaviour
             // calculate percentage
             percent = Mathf.Clamp01(journey / duration);
             // adjust the position of the menu
-            fadeScreen.color = new Color(0f, 0f, 0f,1 - percent);
+            fadeScreen.color = new Color(0f, 0f, 0f, 1 - percent);
             // wait a frame
             yield return null;
         }
@@ -317,10 +340,58 @@ public class MenuSelection : MonoBehaviour
         buttonTapAudioSource.Play();
     }
 
-    public void SetMenuStart(Menu menu, string loc)
+
+    public void SetLanguage(int language)
     {
-        test.menu = menu;
-        test.localizationFile = loc;
+        Language lang = Language.None;
+        switch (language)
+        {
+            case 1:
+                lang = Language.English;
+                break;
+            case 2:
+                lang = Language.Spanish;
+                break;
+            case 3:
+                lang = Language.French;
+                break;
+            default:
+                break;
+        }
+        nativeLanguage = lang;
+
+        if (languageContinueButton.activeSelf == false)
+        {
+            languageContinueButton.SetActive(true);
+        }
+    }
+
+
+
+    public void SetVocab()
+    {
+        var gameSwipeCont = GameSwipe.instance;
+        var vocabCont = VocabReviewController.instance;
+
+        vocabCont.vocabType = selectedMinigame.topic;
+
+
+        vocabCont.UpdateTextBoxes();
+
+        tilte.text = selectedMinigame.name;
+        topic.text = selectedMinigame.topic.ToString();
+
+        var scoreText = "Top 5 Scores:\n";
+        for (int i = 0; i < selectedMinigame.Scores.Count; i++)
+        {
+            scoreText += (i+1) + ": " +  selectedMinigame.Scores[i] + "\n";
+        }
+
+        scores.text = scoreText;
+        
+
+
+
     }
 
 

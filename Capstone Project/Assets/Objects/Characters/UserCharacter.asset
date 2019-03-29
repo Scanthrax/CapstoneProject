@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c447cd1f32f6c54f921b4a3a0f1df0d, type: 3}
   m_Name: UserCharacter
   m_EditorClassIdentifier: 
-  name: User
+  name: username
   country: United States
   waveHandFront:
   - {fileID: 21300000, guid: 41fe8a8ddaac3a54fae84c35be35cdaa, type: 3}
