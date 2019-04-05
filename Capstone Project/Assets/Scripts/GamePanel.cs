@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GamePanel : MonoBehaviour
 {
-    public Text amtOfPlayers, titleOfGame;
+    public Text amtOfPlayers, titleOfGame, topicOfGame;
     public Image image;
     public int position;
 

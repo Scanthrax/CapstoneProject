@@ -14,7 +14,6 @@
 
 
 
-
 //namespace Firebase.Sample.Auth
 //{
 //    using System;
@@ -412,11 +411,11 @@
 //        }
 
 //        // Attempt to sign in anonymously.
-//        public Task SigninAnonymouslyAsync()
+//        public void SigninAnonymouslyAsync()
 //        {
 //            DebugLog("Attempting to sign anonymously...");
 //            DisableUI();
-//            return auth.SignInAnonymouslyAsync().ContinueWith(HandleSignInWithUser);
+//            auth.SignInAnonymouslyAsync().ContinueWith(HandleSignInWithUser);
 //        }
 
 //        // Called when a sign-in without fetching profile data completes.

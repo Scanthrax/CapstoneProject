@@ -19,5 +19,6 @@ public class LanguageSelectButton : MonoBehaviour, IPointerClickHandler
         {
             MenuSelection.instance.languageLearnContinueButton.SetActive(true);
         }
+
     }
 }

@@ -185,6 +185,9 @@ public class MenuSelection : MonoBehaviour
 
         languageLearnContinueButton.SetActive(false);
 
+        Screen.autorotateToPortrait = true;
+
+        Screen.orientation = ScreenOrientation.AutoRotation;
     }
 
 

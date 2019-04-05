@@ -271,6 +271,7 @@ public class GameSwipe : MonoBehaviour
         panel.amtOfPlayers.text = "Players: " + panel.minigame.AmountOfPlayers.ToString();
         panel.titleOfGame.text =  panel.minigame.Name;
         panel.image.sprite = panel.minigame.Thumbnail;
+        panel.topicOfGame.text = panel.minigame.topic.ToString();
     }
 
     void SelectedMinigame(MinigameObject minigame)
