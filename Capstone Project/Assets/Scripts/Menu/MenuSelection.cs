@@ -31,7 +31,7 @@ public class MenuSelection : MonoBehaviour
     /// <summary>
     /// Directions for the menu transitions
     /// </summary>
-    public enum Menu { Welcome, GameSelect, ChooseLanguage, ChooseDifficulty, TopicSelect, None, Login, CharacterSelect, VocabReview, Intro, MinigameLobby }
+    public enum Menu { None, ChooseNativeLanguage, Login, ChooseLearningLanguage, CharacterSelect, ChooseDifficulty, MinigameSelect, MinigameLobby, VocabReview, Intro }
 
 
     public enum Language { None, English, Spanish, French }
@@ -95,6 +95,14 @@ public class MenuSelection : MonoBehaviour
 
 
 
+
+    public Image playerSelectAvatar;
+
+
+    public CharacterObject[] listOfCharacters;
+
+
+    public Image languageSelectedImage;
 
     [Header("Static variables")]
     public Menu startingMenu;
