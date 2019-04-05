@@ -91,7 +91,7 @@ public class MenuSelection : MonoBehaviour
 
 
 
-    public GameObject languageContinueButton;
+    public GameObject languageNativeContinueButton;
 
 
 
@@ -108,6 +108,7 @@ public class MenuSelection : MonoBehaviour
     public Menu startingMenu;
 
     public CharacterObject userCharacter;
+    public GameObject languageLearnContinueButton;
 
 
     [Header("Dynamic variables")]
@@ -180,9 +181,9 @@ public class MenuSelection : MonoBehaviour
         goToMinigameScene = menuScene;
 
 
-        languageContinueButton.SetActive(false);
+        languageNativeContinueButton.SetActive(false);
 
-
+        languageLearnContinueButton.SetActive(false);
 
     }
 
@@ -368,9 +369,9 @@ public class MenuSelection : MonoBehaviour
         }
         nativeLanguage = lang;
 
-        if (languageContinueButton.activeSelf == false)
+        if (languageNativeContinueButton.activeSelf == false)
         {
-            languageContinueButton.SetActive(true);
+            languageNativeContinueButton.SetActive(true);
         }
     }
 
