@@ -12,6 +12,7 @@ public class AvatarSelectButton : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         MenuSelection.instance.playerSelectAvatar.sprite = character.front;
+        MenuSelection.instance.userCharacter = character;
     }
 
     private void OnValidate()

@@ -31,7 +31,7 @@ public class MenuSelection : MonoBehaviour
     /// <summary>
     /// Directions for the menu transitions
     /// </summary>
-    public enum Menu { None, ChooseNativeLanguage, Login, ChooseLearningLanguage, CharacterSelect, ChooseDifficulty, MinigameSelect, MinigameLobby, VocabReview, Intro }
+    public enum Menu { None, SplashScreen, ChooseNativeLanguage, Login, ChooseLearningLanguage, CharacterSelect, ChooseDifficulty, MinigameSelect, MinigameLobby, VocabReview, Intro, Tutorial}
 
 
     public enum Language { None, English, Spanish, French }
@@ -99,7 +99,11 @@ public class MenuSelection : MonoBehaviour
     public Image playerSelectAvatar;
 
 
-    public CharacterObject[] listOfCharacters;
+    public List<CharacterObject> listOfCharacters;
+
+
+    public RectTransform canvas;
+
 
 
     public Image languageSelectedImage;
@@ -140,29 +144,7 @@ public class MenuSelection : MonoBehaviour
             }
         }
 
-        // disable all menus
-        foreach (KeyValuePair<Menu, RectTransform> entry in menuDictionary)
-        {
-            entry.Value.gameObject.SetActive(false);
-            entry.Value.localPosition = new Vector2(0, 1334);
-        }
-
-
-        // declare which menu we will be starting at
-
-
-        RectTransform startMenu = null;
-
-        if (menuDictionary.ContainsKey(startingMenu))
-            startMenu = menuDictionary[startingMenu];
-
-        // put menu at center of screen
-        if (startMenu)
-        {
-            startMenu.gameObject.SetActive(true);
-            startMenu.localPosition = new Vector2(0, 0);
-        }
-
+        MenuInit();
 
 
 
@@ -181,13 +163,16 @@ public class MenuSelection : MonoBehaviour
         goToMinigameScene = menuScene;
 
 
-        languageNativeContinueButton.SetActive(false);
+        //languageNativeContinueButton.SetActive(false);
 
-        languageLearnContinueButton.SetActive(false);
+        //languageLearnContinueButton.SetActive(false);
 
         Screen.autorotateToPortrait = true;
 
         Screen.orientation = ScreenOrientation.AutoRotation;
+
+
+        playerSelectAvatar.sprite = userCharacter.front;
     }
 
 
@@ -318,6 +303,80 @@ public class MenuSelection : MonoBehaviour
     }
 
 
+    public void GoToMinigame(float duration)
+    {
+        StartCoroutine(FadeBlack2(duration));
+    }
+
+
+    IEnumerator FadeBlack2(float duration)
+    {
+
+        // timer for moving the menu
+        float journey = 0f;
+        // percentage of completion, used for finding position on animation curve
+        float percent = 0f;
+
+        // keep adjusting the position while there is time
+        while (journey <= duration)
+        {
+            // add to timer
+            journey = journey + Time.deltaTime;
+            // calculate percentage
+            percent = Mathf.Clamp01(journey / duration);
+            // adjust the position of the menu
+            fadeScreen.color = new Color(0f, 0f, 0f, percent);
+            // wait a frame
+            yield return null;
+        }
+
+        IntroController.instance.enabled = false;
+        SceneManager.LoadScene(selectedMinigame.Scene.name, LoadSceneMode.Additive);
+        canvas.gameObject.SetActive(false);
+
+    }
+
+    public void GoToMenuScene(float duration, string scene)
+    {
+        StartCoroutine(FadeBlack3(duration, scene));
+    }
+
+
+    IEnumerator FadeBlack3(float duration, string scene)
+    {
+
+        // timer for moving the menu
+        float journey = 0f;
+        // percentage of completion, used for finding position on animation curve
+        float percent = 0f;
+
+        // keep adjusting the position while there is time
+        while (journey <= duration)
+        {
+            // add to timer
+            journey = journey + Time.deltaTime;
+            // calculate percentage
+            percent = Mathf.Clamp01(journey / duration);
+            // adjust the position of the menu
+            fadeScreen.color = new Color(0f, 0f, 0f, percent);
+            // wait a frame
+            yield return null;
+        }
+
+        
+        SceneManager.UnloadSceneAsync(scene);
+        canvas.gameObject.SetActive(true);
+        FadeIn(1f);
+
+        startingMenu = Menu.MinigameSelect;
+        currentMenu = startingMenu;
+        MenuInit();
+
+    }
+
+
+
+
     public void FadeIn(float duration)
     {
         StartCoroutine(FadeClear(duration));
@@ -405,6 +464,34 @@ public class MenuSelection : MonoBehaviour
 
 
     }
+
+
+    public void MenuInit()
+    {
+        // disable all menus
+        foreach (KeyValuePair<Menu, RectTransform> entry in menuDictionary)
+        {
+            entry.Value.gameObject.SetActive(false);
+            entry.Value.localPosition = new Vector2(0, 1334);
+        }
+
+
+        // declare which menu we will be starting at
+
+
+        RectTransform startMenu = null;
+
+        if (menuDictionary.ContainsKey(startingMenu))
+            startMenu = menuDictionary[startingMenu];
+
+        // put menu at center of screen
+        if (startMenu)
+        {
+            startMenu.gameObject.SetActive(true);
+            startMenu.localPosition = new Vector2(0, 0);
+        }
+    }
+
 
 
 }

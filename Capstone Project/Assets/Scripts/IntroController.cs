@@ -34,8 +34,6 @@ public class IntroController : MonoBehaviour
     public static IntroController instance;
 
 
-    public List<CharacterObject> listOfCharacters;
-
 
     [Header("send off to minigame")]
     public List<CharacterObject> charactersInGame;
@@ -49,8 +47,13 @@ public class IntroController : MonoBehaviour
 
     private void OnEnable()
     {
+        print("ENABLED");
+
         MenuSelection.instance.menuDictionary[MenuSelection.instance.currentMenu].gameObject.SetActive(false);
 
+
+
+        var listOfCharacters = new List<CharacterObject>(MenuSelection.instance.listOfCharacters);
 
 
         var startMenu = MenuSelection.instance.menuDictionary[MenuSelection.Menu.Intro];
@@ -60,18 +63,21 @@ public class IntroController : MonoBehaviour
 
         amountOfCharacters = MenuSelection.instance.selectedMinigame.AmountOfPlayers;
 
-    }
+        charactersInGame.Clear();
 
-    private void Start()
-    {
         // generate a list of players to send off to the minigame
-        charactersInGame = new List<CharacterObject>();
+        // add the user's selected character first & remove it from the temp list
         charactersInGame.Add(MenuSelection.instance.userCharacter);
+        listOfCharacters.Remove(MenuSelection.instance.userCharacter);
+
+        // randomly assign from the pool of 6 characters
         for (int i = 0; i < amountOfCharacters - 1; i++)
         {
-            charactersInGame.Add(listOfCharacters[Random.Range(0, listOfCharacters.Count)]);
+            var tempChar = listOfCharacters[Random.Range(0, listOfCharacters.Count)];
+            charactersInGame.Add(tempChar);
+            listOfCharacters.Remove(tempChar);
         }
-       
+
 
 
         listOfScreens = new RectTransform[amountOfCharacters + 1];
@@ -82,6 +88,7 @@ public class IntroController : MonoBehaviour
         for (int i = 0; i < amountOfCharacters; i++)
         {
             listOfScreens[i + 1] = Instantiate(characterUIScreen, canvas.localPosition, Quaternion.identity, container);
+            listOfScreens[i + 1].GetComponentInChildren<SimpleAnimate>().Init(charactersInGame[i]);
             listOfScreens[i + 1].gameObject.SetActive(false);
         }
 
@@ -89,14 +96,17 @@ public class IntroController : MonoBehaviour
         time = 0f;
         timer = 3f;
 
-        if(MenuSelection.instance)
+        if (MenuSelection.instance)
         {
             MenuSelection.instance.FadeIn(1f);
         }
         action = 0;
 
 
+    }
 
+    private void Start()
+    {
     }
 
 
@@ -119,22 +129,12 @@ public class IntroController : MonoBehaviour
 
             if (action < listOfScreens.Length)
                 GoToNextMenu();
+            else
+                MenuSelection.instance.GoToMinigame(1f);
 
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

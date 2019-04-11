@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Game2Controller : MonoBehaviour
@@ -58,6 +59,9 @@ public class Game2Controller : MonoBehaviour
 
     int i;
 
+
+    bool gameOver = false;
+
     private void Awake()
     {
         instance = this;
@@ -101,6 +105,14 @@ public class Game2Controller : MonoBehaviour
         {
             timer -= Time.deltaTime;
             timerText.text = Mathf.CeilToInt(timer).ToString();
+        }
+        else
+        {
+            if(!gameOver)
+            {
+                gameOver = true;
+                MenuSelection.instance.GoToMenuScene(1f, MenuSelection.instance.selectedMinigame.Scene.name);
+            }
         }
 
         #region DEMAND
@@ -268,7 +280,7 @@ public class Game2Controller : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.V))
         {
-            AIGuess(3);
+            AIGuess(1);
         }
 
     }
@@ -283,7 +295,7 @@ public class Game2Controller : MonoBehaviour
 
             wordRecognized = phrase;
             ActivateGameObject(phraseText.gameObject, true);
-            SetBubbles(3);
+            SetBubbles(i);
 
             gameState = Game2State.Phrase;
             phraseText.text = wordRecognized;

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class GamePanel : MonoBehaviour
+public class GamePanel : MonoBehaviour, IPointerDownHandler
 {
     public Text amtOfPlayers, titleOfGame, topicOfGame;
     public Image image;
@@ -21,7 +22,12 @@ public class GamePanel : MonoBehaviour
             position = 4;
     }
 
-
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        MenuSelection.instance.selectedMinigame = minigame;
+        MenuSelection.instance.SetVocab();
+        MenuSelection.instance.GoToNextMenu(MenuSelection.Menu.MinigameLobby);
+    }
 
     public void UpdateMinigame(MinigameObject newMinigame)
     {

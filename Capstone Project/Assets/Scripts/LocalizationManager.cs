@@ -39,40 +39,40 @@ public class LocalizationManager : MonoBehaviour {
 
 	public void LoadLocalizedText()
     {
-        foreach (KeyValuePair<MenuSelection.Menu, RectTransform> entry in MenuSelection.instance.menuDictionary)
-        {
-            entry.Value.gameObject.SetActive(true);
-        }
+        //foreach (KeyValuePair<MenuSelection.Menu, RectTransform> entry in MenuSelection.instance.menuDictionary)
+        //{
+        //    entry.Value.gameObject.SetActive(true);
+        //}
 
 
 
-        localizedText = new Dictionary<string, string>();
+        //localizedText = new Dictionary<string, string>();
 
-        string filePath = Application.streamingAssetsPath + @"\Localization\" + fileName;
-        print(filePath);
+        //string filePath = Application.streamingAssetsPath + @"\Localization\" + fileName;
+        //print(filePath);
 
-        if(File.Exists(filePath))
-        {
-            string dataAsJson = File.ReadAllText(filePath);
-            LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
-            for (int i = 0; i < loadedData.items.Length; i++)
-            {
-                localizedText.Add(loadedData.items[i].key, loadedData.items[i].phrase);
-            }
-            print("Data loaded, dictionary contains " + localizedText.Count + " entries");
-            OnTextLocalized();
-            //if(MenuSelection.instance.test.menu.ToString() == "ChooseLanguage") MenuSelection.instance.SetMenuStart(MenuSelection.Menu.ChooseDifficulty, fileName);
-        }
-        else
-        {
-            print("Cannot find localization file!");
-        }
+        //if(File.Exists(filePath))
+        //{
+        //    string dataAsJson = File.ReadAllText(filePath);
+        //    LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+        //    for (int i = 0; i < loadedData.items.Length; i++)
+        //    {
+        //        localizedText.Add(loadedData.items[i].key, loadedData.items[i].phrase);
+        //    }
+        //    print("Data loaded, dictionary contains " + localizedText.Count + " entries");
+        //    OnTextLocalized();
+        //    //if(MenuSelection.instance.test.menu.ToString() == "ChooseLanguage") MenuSelection.instance.SetMenuStart(MenuSelection.Menu.ChooseDifficulty, fileName);
+        //}
+        //else
+        //{
+        //    print("Cannot find localization file!");
+        //}
 
-        foreach (KeyValuePair<MenuSelection.Menu, RectTransform> entry in MenuSelection.instance.menuDictionary)
-        {
-            entry.Value.gameObject.SetActive(false);
-        }
-        MenuSelection.instance.menuDictionary[MenuSelection.instance.currentMenu].gameObject.SetActive(true);
+        //foreach (KeyValuePair<MenuSelection.Menu, RectTransform> entry in MenuSelection.instance.menuDictionary)
+        //{
+        //    entry.Value.gameObject.SetActive(false);
+        //}
+        //MenuSelection.instance.menuDictionary[MenuSelection.instance.currentMenu].gameObject.SetActive(true);
 
     }
 

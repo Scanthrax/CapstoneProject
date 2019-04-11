@@ -132,7 +132,8 @@ public class Controller : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            RandomPosition(actionObjects[0].presentSimpleSentence);
+            IncreasePoints(0);
+            //RandomPosition(actionObjects[0].presentSimpleSentence);
         }
 
         if (Input.GetKeyDown(KeyCode.X))
@@ -232,13 +233,15 @@ public class Controller : MonoBehaviour
 
     void EndGame()
     {
-        gameRunning = false;
-        MenuSelection.instance.FadeOut(3f);
-        timerText.gameObject.SetActive(false);
-        startText.gameObject.SetActive(true);
-        startText.GetComponent<Text>().text = "Finish!";
-        MenuSelection.goToScene = MenuSelection.menuScene;
-
+        if (gameRunning)
+        {
+            gameRunning = false;
+            MenuSelection.instance.GoToMenuScene(3f, MenuSelection.instance.selectedMinigame.Scene.name);
+            print(MenuSelection.instance.selectedMinigame.Scene.name);
+            timerText.gameObject.SetActive(false);
+            startText.gameObject.SetActive(true);
+            startText.GetComponent<Text>().text = "Finish!";
+        }
         //StaticVariables.minigame.Scores.Add(points[0]);
         //SceneManager.LoadScene(menuScene.name);
     }

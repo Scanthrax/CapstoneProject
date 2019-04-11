@@ -8,6 +8,8 @@ public class SimpleAnimate : MonoBehaviour
     public float framesPerSecond = 10;
     Image renderer;
 
+    public Text text;
+
     public CharacterObject character;
 
     Sprite[] anim;
@@ -22,5 +24,13 @@ public class SimpleAnimate : MonoBehaviour
     {
         int index = Mathf.RoundToInt(Time.time * framesPerSecond) % anim.Length;
         renderer.sprite = anim[index];
+    }
+
+
+
+    public void Init(CharacterObject character)
+    {
+        this.character = character;
+        text.text = character.name;
     }
 }

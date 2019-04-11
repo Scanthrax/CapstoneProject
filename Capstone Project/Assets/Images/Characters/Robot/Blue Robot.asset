@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c447cd1f32f6c54f921b4a3a0f1df0d, type: 3}
   m_Name: Blue Robot
   m_EditorClassIdentifier: 
-  name: 
+  name: Paul
   country: 
   waveHandFront:
   - {fileID: 21300000, guid: 6ec6a704c7658f247907a6b179282e1c, type: 3}
