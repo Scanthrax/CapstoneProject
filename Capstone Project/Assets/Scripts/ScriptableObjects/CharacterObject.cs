@@ -10,4 +10,5 @@ public class CharacterObject : ScriptableObject
     public string country;
     public Sprite[] waveHandFront;
     public Sprite front, behind;
+    public Sprite silhouette;
 }

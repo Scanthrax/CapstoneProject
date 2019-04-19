@@ -16,7 +16,7 @@ MonoBehaviour:
   topic: 2
   Name: Minigame 3
   Lesson: Actions
-  Thumbnail: {fileID: 21300000, guid: 5e825bf15c5f2374bb77584be93b54f9, type: 3}
+  Thumbnail: {fileID: 21300000, guid: ce2e79ff4263d574c8ab0d02e1757120, type: 3}
   Scene: {fileID: 102900000, guid: 1f89dbfba8ccf7048a73969dfb90a9d7, type: 3}
   AmountOfPlayers: 4
   TimesPlayed: 5

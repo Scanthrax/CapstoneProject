@@ -67,3 +67,4 @@ MonoBehaviour:
   - {fileID: 21300098, guid: 6ec6a704c7658f247907a6b179282e1c, type: 3}
   front: {fileID: 21300000, guid: 5e8b74a8b63becc4ba1c329ddb28519a, type: 3}
   behind: {fileID: 21300000, guid: d7b355c9cede3a944adb22287a6b20f5, type: 3}
+  silhouette: {fileID: 21300000, guid: 09f35056e2d3d0f4e872e54fe05fc79f, type: 3}

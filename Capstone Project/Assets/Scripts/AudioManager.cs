@@ -14,6 +14,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] songs;
     public AudioSource musicSource;
 
+    public AudioClip game1;
+
     private void Awake()
     {
         instance = this;

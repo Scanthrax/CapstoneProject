@@ -108,6 +108,7 @@ public class MenuSelection : MonoBehaviour
 
     public Image languageSelectedImage;
 
+
     [Header("Static variables")]
     public Menu startingMenu;
 
@@ -173,6 +174,9 @@ public class MenuSelection : MonoBehaviour
 
 
         playerSelectAvatar.sprite = userCharacter.front;
+
+
+
     }
 
 
@@ -366,6 +370,7 @@ public class MenuSelection : MonoBehaviour
         
         SceneManager.UnloadSceneAsync(scene);
         canvas.gameObject.SetActive(true);
+        AudioManager.instance.PlayMusicAtStart();
         FadeIn(1f);
 
         startingMenu = Menu.MinigameSelect;

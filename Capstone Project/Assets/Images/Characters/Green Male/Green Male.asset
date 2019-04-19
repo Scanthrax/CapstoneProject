@@ -65,6 +65,6 @@ MonoBehaviour:
   - {fileID: 21300094, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
   - {fileID: 21300096, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
   - {fileID: 21300098, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
-  waveHandBehind: []
   front: {fileID: 21300000, guid: d53131df69fb51a4ab6f19b01ea5e0d5, type: 3}
   behind: {fileID: 21300000, guid: 94d4861d0b96b3d47b34f003a58d3fe1, type: 3}
+  silhouette: {fileID: 21300000, guid: 2445c663dee00f7479329dcd1ac7fe1e, type: 3}

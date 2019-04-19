@@ -21,6 +21,16 @@ public class VocabReviewController : MonoBehaviour
     public Slider slider;
     public RectTransform textBoxContainer;
     public Image vocabImage;
+    public Text selectedText;
+    public Sprite empty;
+
+
+
+    private void Start()
+    {
+        vocabImage.sprite = empty;
+        selectedText.text = "";
+    }
 
 
     [ContextMenu("function")]
@@ -72,7 +82,25 @@ public class VocabReviewController : MonoBehaviour
 
     public void ChangeImage(int i)
     {
+        string temp = "";
+        switch (vocabType)
+        {
+            case Topic.PresentSimple:
+                    temp = listOfActionObjects[i].presentSimpleSentence;
+                break;
+            case Topic.Commands:
+                    temp = listOfActionObjects[i].commandSentence;
+                break;
+            case Topic.PastSimple:
+                    temp = listOfActionObjects[i].negateSentence;
+                break;
+            default:
+                break;
+        }
+
+
         vocabImage.sprite = listOfActionObjects[i].sprites[0];
+        selectedText.text = temp;
     }
 
 }

@@ -84,7 +84,7 @@ public class GameSwipe : MonoBehaviour
         uiPanels[2].transform.localScale = Vector3.one * scaleSize;
 
 
-        SetSelectedMinigame();
+        //SetSelectedMinigame();
     }
 
     void Update()
@@ -113,7 +113,7 @@ public class GameSwipe : MonoBehaviour
             MoveMenus(uiPanels[i], true);
         }
 
-        SelectedMinigame(node.Value);
+        //SelectedMinigame(node.Value);
     }
 
     public void SwipeRight()
@@ -132,12 +132,12 @@ public class GameSwipe : MonoBehaviour
     void NextNode()
     {
         node = node.Next ?? node.List.First;
-        SetSelectedMinigame();
+        //SetSelectedMinigame();
     }
     void PreviousNode()
     {
         node = node.Previous ?? node.List.Last;
-        SetSelectedMinigame();
+        //SetSelectedMinigame();
     }
 
 

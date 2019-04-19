@@ -13,7 +13,7 @@ public class Controller : MonoBehaviour
 
     public int numberOfActions;
     public Difficulty difficulty;
-    public GameObject[] players;
+    public Game1Player[] players;
     public Text[] text;
     int[] points = new int[4];
     bool[] aiScore = new bool[4];
@@ -53,6 +53,11 @@ public class Controller : MonoBehaviour
 
     public Image fadeScreen;
 
+
+    public List<CharacterObject> listOfCharacters;
+
+    public AudioSource endGame;
+
     private void Awake()
     {
         instance = this;
@@ -85,24 +90,58 @@ public class Controller : MonoBehaviour
                 break;
         }
 
-        foreach (var item in text)
-        {
-            item.text = 0.ToString();
-        }
 
-        InitGame();
+        
 
 
         if (MenuSelection.instance)
         {
             MenuSelection.instance.FadeIn(1f);
         }
+
+
+        if(IntroController.instance)
+        {
+            listOfCharacters = IntroController.instance.charactersInGame;
+        }
+
+        if(AudioManager.instance)
+        {
+            AudioManager.instance.musicSource.clip = AudioManager.instance.game1;
+            AudioManager.instance.musicSource.Play();
+        }
+
+
+
+        for (int i = 0; i < 4; i++)
+        {
+            print("here");
+            players[i].character = listOfCharacters[i];
+            players[i].ChangeSprite();
+        }
+
+        InitGame();
+
+
+        var outline = Instantiate(new GameObject(), players[0].transform.position, Quaternion.identity, players[0].transform);
+        outline.transform.localScale += Vector3.one * 0.1f;
+        outline.transform.position += Vector3.back * 0.1f + Vector3.down * 0.12f;
+        var outlineRend = outline.AddComponent<SpriteRenderer>();
+        outlineRend.sprite = players[0].character.silhouette;
+        outlineRend.color = Color.yellow;
     }
 	
 
     void PlaySoundCorrect()
     {
         correctAnswerSource.Play();
+    }
+
+
+
+    public void SetTimer(float time)
+    {
+        timer = time;
     }
 
 	// Update is called once per frame
@@ -123,7 +162,7 @@ public class Controller : MonoBehaviour
                 PlaySoundCorrect();
                 for (int i = 0; i < wordToObject[wordRecognized].Count; i++)
                 {
-                    IncreasePoints(0);
+                    players[0].StartWaving();
                 }
                 
             }
@@ -132,23 +171,23 @@ public class Controller : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            IncreasePoints(0);
+            players[0].StartWaving();
             //RandomPosition(actionObjects[0].presentSimpleSentence);
         }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            IncreasePoints(1);
+            players[1].StartWaving();
             //RandomPosition();
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-            IncreasePoints(2);
+            players[2].StartWaving();
             //RandomPosition();
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
-            IncreasePoints(3);
+            players[3].StartWaving();
             //RandomPosition();
         }
 
@@ -167,18 +206,30 @@ public class Controller : MonoBehaviour
         {
             if (Time.frameCount % 60 == 0)
             {
-                for (int i = 1; i < aiScore.Length; i++)
+                for (int i = 1; i < 4; i++)
                 {
-                    if (Random.value <= 0.1)
+                    if (!players[i].waving)
                     {
-                        aiScore[i] = true;
+                        if (Random.value <= 0.1)
+                        {
+                            players[i].StartWaving();
+                        }
                     }
+                }
+            }
+        }
 
-                    if (aiScore[i])
-                    {
-                        IncreasePoints(i);
-                        aiScore[i] = false;
-                    }
+        foreach (var item in players)
+        {
+            if(item.waving)
+            {
+                if(item.waveTimer <= 0f)
+                {
+                    item.waving = false;
+                    item.characterRender.sprite = item.character.behind;
+                    item.score += 10;
+                    item.scoreText.text = item.score.ToString();
+                    PlaySoundCorrect();
                 }
             }
         }
@@ -197,11 +248,6 @@ public class Controller : MonoBehaviour
 
 
 
-    void IncreasePoints(int i)
-    {
-        points[i] += 10;
-        text[i].text = points[i].ToString();
-    }
 
     int RandomPosition(string key)
     {
@@ -241,6 +287,7 @@ public class Controller : MonoBehaviour
             timerText.gameObject.SetActive(false);
             startText.gameObject.SetActive(true);
             startText.GetComponent<Text>().text = "Finish!";
+            endGame.Play();
         }
         //StaticVariables.minigame.Scores.Add(points[0]);
         //SceneManager.LoadScene(menuScene.name);

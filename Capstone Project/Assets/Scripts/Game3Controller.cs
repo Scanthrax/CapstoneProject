@@ -44,6 +44,9 @@ public class Game3Controller : MonoBehaviour
 
     public Text roundText;
     int roundNumber, maxRounds;
+    public List<CharacterObject> listOfCharacters;
+
+    bool endGame, gameRunning;
 
     private void Start()
     {
@@ -52,128 +55,188 @@ public class Game3Controller : MonoBehaviour
         newState = true;
         roundNumber = 1;
         maxRounds = 5;
-        
+
+        endGame = false;
+        gameRunning = true;
+
+        if (MenuSelection.instance)
+        {
+            MenuSelection.instance.FadeIn(1f);
+        }
+
+
+        if (IntroController.instance)
+        {
+            listOfCharacters = IntroController.instance.charactersInGame;
+        }
+
+        if (AudioManager.instance)
+        {
+            AudioManager.instance.musicSource.clip = AudioManager.instance.game1;
+            AudioManager.instance.musicSource.Play();
+        }
+
     }
 
 
     private void Update()
     {
-        if (state == Game3State.Choosing)
+        if (gameRunning)
         {
-            if(newState)
+            if (Input.GetKeyDown(KeyCode.P))
             {
-                newState = false;
-                amtInLeft = 4;
-                timer = 10f;
-
-
-                amtInLeft = 0;
-                amtInRight = 0;
-                amtLeft = 4;
-
-                foreach (var item in players)
-                {
-                    item.selectedPath = false;
-                }
-
-                PlaceImages();
-
-                roundText.text = "Round " + roundNumber;
-
-                PlacePlayers();
-
+                roundNumber = 6;
             }
 
-            UpdateTimer();
 
-                
-
-            for (int i = 1; i < players.Length; i++)
+            if (state == Game3State.Choosing)
             {
-                if(!players[i].selectedPath)
+                if (newState)
                 {
-                    var randomChance = Random.value;
-                    if (randomChance < 0.005f)
-                    {
-                        var randomSide = Random.value < 0.5f ? true : false;
+                    newState = false;
+                    amtInLeft = 4;
+                    timer = 10f;
 
-                        if(randomSide)
+
+                    amtInLeft = 0;
+                    amtInRight = 0;
+                    amtLeft = 4;
+
+                    foreach (var item in players)
+                    {
+                        item.selectedPath = false;
+                    }
+
+                    PlaceImages();
+
+                    roundText.text = "Round " + roundNumber;
+
+                    PlacePlayers();
+
+                }
+
+                UpdateTimer();
+
+
+
+                for (int i = 1; i < players.Length; i++)
+                {
+                    if (!players[i].selectedPath)
+                    {
+                        var randomChance = Random.value;
+                        if (randomChance < 0.005f)
                         {
-                            
-                            players[i].playerNumberTag.localPosition = leftDoor.localPosition + new Vector3(amtInLeft * 100,0,0);
-                            players[i].selectedPath = true;
-                            amtInLeft++;
+                            var randomSide = Random.value < 0.5f ? true : false;
+
+                            if (randomSide)
+                            {
+
+                                players[i].playerNumberTag.localPosition = leftDoor.localPosition + new Vector3(amtInLeft * 100, 0, 0);
+                                players[i].selectedPath = true;
+                                amtInLeft++;
+                            }
+                            else
+                            {
+
+                                players[i].playerNumberTag.localPosition = rightDoor.localPosition + new Vector3(amtInRight * 100, 0, 0);
+                                players[i].selectedPath = true;
+                                amtInRight++;
+                            }
+                            amtLeft--;
                         }
-                        else
-                        {
-                            
-                            players[i].playerNumberTag.localPosition = rightDoor.localPosition + new Vector3(amtInRight * 100, 0, 0);
-                            players[i].selectedPath = true;
-                            amtInRight++;
-                        }
-                        amtLeft--;
                     }
                 }
-            }
 
-            if(amtLeft == 0)
-            {
-                state = Game3State.ChoosingPause;
-                newState = true;
-                timerText.text = "";
-
-            }
-
-
-
-        }
-        else if (state == Game3State.ChoosingPause)
-        {
-            if(newState)
-            {
-                newState = false;
-
-                for (int i = 0; i < players.Length; i++)
+                if (amtLeft == 0)
                 {
-                    StartCoroutine(MoveCharacters(players[i]));
+                    state = Game3State.ChoosingPause;
+                    newState = true;
+                    timerText.text = "";
+
                 }
 
-                timer = 2f;
+
 
             }
-
-            timer -= Time.deltaTime;
-
-            if (timer <= 0f)
+            else if (state == Game3State.ChoosingPause)
             {
-                state = Game3State.DisplayAnswer;
-                newState = true;
-            }
-                
+                if (newState)
+                {
+                    newState = false;
 
+                    for (int i = 0; i < players.Length; i++)
+                    {
+                        StartCoroutine(MoveCharacters(players[i]));
+                    }
+
+                    timer = 2f;
+
+                }
+
+                timer -= Time.deltaTime;
+
+                if (timer <= 0f)
+                {
+                    state = Game3State.DisplayAnswer;
+                    newState = true;
+                }
+
+
+            }
+            else if (state == Game3State.DisplayAnswer)
+            {
+                if (newState)
+                {
+                    newState = false;
+                    if (AudioManager.instance)
+                        AudioManager.instance.PlayCorrectSound();
+                    timer = 2f;
+
+                    checkmark.SetActive(true);
+                    checkmark.transform.localPosition = winningSide ? leftImage.rectTransform.localPosition : rightImage.rectTransform.localPosition;
+                }
+
+                timer -= Time.deltaTime;
+
+                if (timer <= 0f)
+                {
+                    if (roundNumber > 4 && !endGame)
+                    {
+                        endGame = true;
+                        print("ENDING GAME");
+                        EndGame();
+                    }
+
+                    if (!endGame)
+                    {
+                        roundNumber++;
+                        state = Game3State.Choosing;
+                        newState = true;
+                    }
+
+                }
+
+            }
         }
-        else if (state == Game3State.DisplayAnswer)
+    }
+
+    public void SetRound(int round)
+    {
+        roundNumber = round;
+    }
+
+    void EndGame()
+    {
+        if (gameRunning)
         {
-            if(newState)
-            {
-                newState = false;
-                AudioManager.instance.PlayCorrectSound();
-                timer = 2f;
-
-                checkmark.SetActive(true);
-                checkmark.transform.localPosition = winningSide ? leftImage.rectTransform.localPosition : rightImage.rectTransform.localPosition;
-            }
-
-            timer -= Time.deltaTime;
-
-            if (timer <= 0f)
-            {
-                state = Game3State.Choosing;
-                newState = true;
-                roundNumber++;
-            }
-
+            gameRunning = false;
+            MenuSelection.instance.GoToMenuScene(3f, MenuSelection.instance.selectedMinigame.Scene.name);
+            print(MenuSelection.instance.selectedMinigame.Scene.name);
+            timerText.text = "Finish!";
+            //endGame.Play();
         }
+        //StaticVariables.minigame.Scores.Add(points[0]);
+        //SceneManager.LoadScene(menuScene.name);
     }
 
 

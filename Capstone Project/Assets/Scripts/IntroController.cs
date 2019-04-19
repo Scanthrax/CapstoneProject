@@ -49,6 +49,13 @@ public class IntroController : MonoBehaviour
     {
         print("ENABLED");
 
+
+        for (int i = 0; i < container.childCount; i++)
+        {
+            Destroy(container.transform.GetChild(i).gameObject);
+        }
+
+
         MenuSelection.instance.menuDictionary[MenuSelection.instance.currentMenu].gameObject.SetActive(false);
 
 
@@ -80,8 +87,8 @@ public class IntroController : MonoBehaviour
 
 
 
-        listOfScreens = new RectTransform[amountOfCharacters + 1];
 
+        listOfScreens = new RectTransform[amountOfCharacters + 1];
 
         listOfScreens[0] = greetScreen;
 
