@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utility;
 using UnityEngine.UI;
+using TMPro;
 
 public class Controller : MonoBehaviour
 {
@@ -14,25 +15,24 @@ public class Controller : MonoBehaviour
     public int numberOfActions;
     public Difficulty difficulty;
     public Game1Player[] players;
-    public Text[] text;
-    int[] points = new int[4];
-    bool[] aiScore = new bool[4];
+
+
+    public string[] wordbank;
+
 
     public string wordRecognized;
     public bool recognizedNewWord = false;
 
-    List<GameObject> actions = new List<GameObject>();
 
 
     public float timer;
-    public Text timerText;
-    public Object menuScene;
+    public TextMeshPro timerText;
 
 
     public ActionObject[] actionObjects;
 
 
-    public Dictionary<string, List<GameObject>> wordToObject = new Dictionary<string, List<GameObject>>();
+    public Dictionary<string, List<GameObject>> wordToObject;
 
     float duration = 2f;
 
@@ -40,7 +40,7 @@ public class Controller : MonoBehaviour
 
     bool gameRunning = false;
 
-    public GameObject startText;
+    public TextMeshPro startText;
 
 
     public static Controller instance;
@@ -58,13 +58,21 @@ public class Controller : MonoBehaviour
 
     public AudioSource endGame;
 
+    public ParticleSystem correctParticles;
+
+
+    public SpeechBubble[] bubbles;
+
+    [System.Serializable]
+    public struct SpeechBubble
+    {
+        public GameObject speechBubble;
+        public TextMeshPro bubbleText;
+    }
+
     private void Awake()
     {
         instance = this;
-
-
-
-
     }
 
 
@@ -72,9 +80,9 @@ public class Controller : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        wordToObject = new Dictionary<string, List<GameObject>>();
 
-        
-        switch(difficulty)
+        switch (difficulty)
         {
             case Difficulty.Easy:
                 speed = 0.75f;
@@ -112,6 +120,13 @@ public class Controller : MonoBehaviour
         }
 
 
+        wordbank = new string[5];
+        for (int i = 0; i < 5; i++)
+        {
+            wordbank[i] = actionObjects[i].presentSimpleSentence;
+        }
+
+
 
         for (int i = 0; i < 4; i++)
         {
@@ -123,12 +138,19 @@ public class Controller : MonoBehaviour
         InitGame();
 
 
-        var outline = Instantiate(new GameObject(), players[0].transform.position, Quaternion.identity, players[0].transform);
-        outline.transform.localScale += Vector3.one * 0.1f;
-        outline.transform.position += Vector3.back * 0.1f + Vector3.down * 0.12f;
-        var outlineRend = outline.AddComponent<SpriteRenderer>();
-        outlineRend.sprite = players[0].character.silhouette;
-        outlineRend.color = Color.yellow;
+        //var outline = Instantiate(new GameObject(), players[0].transform.position, Quaternion.identity, players[0].transform);
+        //outline.transform.localScale += Vector3.one * 0.1f;
+        //outline.transform.position += Vector3.back * 0.1f + Vector3.down * 0.12f;
+        //var outlineRend = outline.AddComponent<SpriteRenderer>();
+        //outlineRend.sprite = players[0].character.silhouette;
+        //outlineRend.color = Color.yellow;
+
+
+
+        foreach (var item in bubbles)
+        {
+            item.speechBubble.SetActive(false);
+        }
     }
 	
 
@@ -162,7 +184,7 @@ public class Controller : MonoBehaviour
                 PlaySoundCorrect();
                 for (int i = 0; i < wordToObject[wordRecognized].Count; i++)
                 {
-                    players[0].StartWaving();
+                    players[0].StartWaving(wordbank[Random.Range(0,5)]);
                 }
                 
             }
@@ -171,24 +193,31 @@ public class Controller : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            players[0].StartWaving();
-            //RandomPosition(actionObjects[0].presentSimpleSentence);
+            players[0].StartWaving(wordbank[Random.Range(0, 5)]);
+            bubbles[0].speechBubble.SetActive(true);
+            bubbles[0].bubbleText.text = players[0].guessWord;
+
         }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            players[1].StartWaving();
-            //RandomPosition();
+            players[1].StartWaving(wordbank[Random.Range(0, 5)]);
+            bubbles[1].speechBubble.SetActive(true);
+            bubbles[1].bubbleText.text = players[1].guessWord;
+
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-            players[2].StartWaving();
-            //RandomPosition();
+            players[2].StartWaving(wordbank[Random.Range(0, 5)]);
+            bubbles[2].speechBubble.SetActive(true);
+            bubbles[2].bubbleText.text = players[2].guessWord;
+
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
-            players[3].StartWaving();
-            //RandomPosition();
+            players[3].StartWaving(wordbank[Random.Range(0, 5)]);
+            bubbles[3].speechBubble.SetActive(true);
+            bubbles[3].bubbleText.text = players[3].guessWord;
         }
 
         if (gameRunning)
@@ -206,13 +235,15 @@ public class Controller : MonoBehaviour
         {
             if (Time.frameCount % 60 == 0)
             {
-                for (int i = 1; i < 4; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     if (!players[i].waving)
                     {
                         if (Random.value <= 0.1)
                         {
-                            players[i].StartWaving();
+                            players[i].StartWaving(wordbank[Random.Range(0, 5)]);
+                            bubbles[i].speechBubble.SetActive(true);
+                            bubbles[i].bubbleText.text = players[i].guessWord;
                         }
                     }
                 }
@@ -227,24 +258,40 @@ public class Controller : MonoBehaviour
                 {
                     item.waving = false;
                     item.characterRender.sprite = item.character.behind;
-                    item.score += 10;
+
+                    bubbles[item.i].speechBubble.SetActive(false);
+
+                    if (wordToObject.ContainsKey(item.guessWord))
+                    {
+                        var tempList = new List<GameObject>();
+                        foreach (var action in wordToObject[item.guessWord])
+                        {
+                            item.score += 10;
+                            var particles = Instantiate(correctParticles, action.transform.position, Quaternion.Euler(-90,0,0),action.transform.parent);
+                            particles.Play();
+                            Destroy(particles.gameObject, 2f);
+                            tempList.Add(action);
+                        }
+
+                        if(wordToObject[item.guessWord].Count > 0)
+                            PlaySoundCorrect();
+
+                        foreach (var it in tempList)
+                        {
+                            wordToObject[item.guessWord].Remove(it);
+                            Destroy(it.gameObject);
+                            SpawnAction();
+                        }
+                    }
+
                     item.scoreText.text = item.score.ToString();
-                    PlaySoundCorrect();
                 }
             }
         }
 
     }
 
-    void RandomPosition()
-    {
-        int rand = Random.Range(0, actions.Count);
 
-        float x = Random.Range(-screen.transform.localScale.x * 5f, screen.transform.localScale.x * 5f);
-        float y = Random.Range(-screen.transform.localScale.z * 5f, screen.transform.localScale.z * 5f);
-
-        actions[rand].transform.position = new Vector3(screen.transform.position.x + x, screen.transform.position.y + y, screen.transform.position.z - 0.01f);
-    }
 
 
 
@@ -282,14 +329,15 @@ public class Controller : MonoBehaviour
         if (gameRunning)
         {
             gameRunning = false;
-            MenuSelection.instance.GoToMenuScene(3f, MenuSelection.instance.selectedMinigame.Scene.name);
-            print(MenuSelection.instance.selectedMinigame.Scene.name);
+            MenuSelection.instance.GoToMenuScene(3f, MenuSelection.instance.selectedMinigame.sceneName);
+            print(MenuSelection.instance.selectedMinigame.sceneName);
             timerText.gameObject.SetActive(false);
             startText.gameObject.SetActive(true);
-            startText.GetComponent<Text>().text = "Finish!";
+            startText.text = "Finish!";
+            MenuSelection.instance.selectedMinigame.Scores.Add(players[0].score);
             endGame.Play();
         }
-        //StaticVariables.minigame.Scores.Add(points[0]);
+        
         //SceneManager.LoadScene(menuScene.name);
     }
 
@@ -316,29 +364,33 @@ public class Controller : MonoBehaviour
 
         for (int i = 0; i < numberOfActions; i++)
         {
-            float x = Random.Range(screen.position.x - 4.5f, screen.position.x + 4.5f);
-            float y = Random.Range(screen.position.y - 3f, screen.position.y + 3f);
-
-            var obj = Instantiate(action, new Vector3(screen.transform.position.x + x, screen.transform.position.y + y, screen.transform.position.z - 0.01f), Quaternion.identity, arenaContainer).GetComponent<movement>();
-
-            actions.Add(obj.gameObject);
-            obj.speed = speed;
-            obj.actionObj = actionObjects[Random.Range(0, actionObjects.Length)];
-
-            var sentence = obj.actionObj.presentSimpleSentence;
-
-            if (!wordToObject.ContainsKey(sentence))
-            {
-                wordToObject.Add(sentence, new List<GameObject>());
-            }
-            wordToObject[sentence].Add(obj.gameObject);
+            SpawnAction();
 
         }
 
         gameRunning = true;
 
-        startText.SetActive(false);
+        startText.gameObject.SetActive(false);
     }
 
+
+    void SpawnAction()
+    {
+        float x = Random.Range(screen.position.x - 2f, screen.position.x + 2f);
+        float y = Random.Range(screen.position.y - 3f, screen.position.y + 0.5f);
+
+        var obj = Instantiate(action, new Vector3(screen.transform.position.x + x, screen.transform.position.y + y, screen.transform.position.z - 0.01f), Quaternion.identity, arenaContainer).GetComponent<movement>();
+
+        obj.speed = speed;
+        obj.actionObj = actionObjects[Random.Range(0, actionObjects.Length)];
+
+        var sentence = obj.actionObj.presentSimpleSentence;
+
+        if (!wordToObject.ContainsKey(sentence))
+        {
+            wordToObject.Add(sentence, new List<GameObject>());
+        }
+        wordToObject[sentence].Add(obj.gameObject);
+    }
 
 }

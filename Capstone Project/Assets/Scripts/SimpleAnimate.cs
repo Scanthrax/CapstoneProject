@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SimpleAnimate : MonoBehaviour
 {
     public float framesPerSecond = 10;
     Image renderer;
 
-    public Text text;
+    public TextMeshProUGUI text;
 
     public CharacterObject character;
 

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db330ef39f55da4a90b7cd80053f2aa, type: 3}
   m_Name: m_dry_hands
   m_EditorClassIdentifier: 
-  presentSimpleSentence: he dries his hands
-  commandSentence: dry your hands
-  negateSentence: don't dry your hands
+  presentSimpleSentence: He dries his hands.
+  commandSentence: Dry your hands.
+  negateSentence: Don't dry your hands.
   sprites:
   - {fileID: 21300000, guid: ef2c840820feb924987a0b1d16dba783, type: 3}
   - {fileID: 21300002, guid: ef2c840820feb924987a0b1d16dba783, type: 3}

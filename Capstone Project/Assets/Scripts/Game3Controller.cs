@@ -2,27 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Game3Controller : MonoBehaviour
 {
 
     public enum Game3State { Choosing, ChoosingPause, DisplayAnswer}
 
-    public Image action;
+    public SpriteRenderer action;
 
     float timer;
-    public Text timerText;
+    public TextMeshPro timerText;
 
     public Game3State state;
 
 
 
-    public Game3Player[] players;
+    public Game1Player[] players;
 
 
 
-    public int amtInLeft, amtInRight;
-    public RectTransform leftDoor, rightDoor;
+    //public int amtInLeft, amtInRight;
+
+    public int amtInLeft
+    {
+        get
+        {
+            return leftPath.Count;
+        }
+    }
+    public int amtInRight
+    {
+        get
+        {
+            return rightPath.Count;
+        }
+    }
+
+
+
+    public Transform leftDoor, rightDoor;
 
 
     public int amtLeft;
@@ -36,20 +55,39 @@ public class Game3Controller : MonoBehaviour
 
 
     public bool winningSide;
-    public Image leftImage, rightImage;
+    public SpriteRenderer leftImage, rightImage;
     public Sprite correctImage, incorrectImage;
-    public GameObject checkmark;
+    public Transform checkmark;
 
-    public RectTransform playerStart;
+    public Vector3[] startPositions;
 
-    public Text roundText;
+    public TextMeshPro roundText;
     int roundNumber, maxRounds;
-    public List<CharacterObject> listOfCharacters;
 
     bool endGame, gameRunning;
 
+    public List<ActionObject> listOfNouns;
+    public PoseToNoun correctObj;
+
+
+    public List<PoseToNoun> poseToNouns;
+
+    public List<Game1Player> leftPath, rightPath;
+
+    [System.Serializable]
+    public struct PoseToNoun
+    {
+        public Sprite pose;
+        public ActionObject obj;
+    }
+
+
     private void Start()
     {
+
+
+
+
         state = Game3State.Choosing;
         amtLeft = 4;
         newState = true;
@@ -67,13 +105,24 @@ public class Game3Controller : MonoBehaviour
 
         if (IntroController.instance)
         {
-            listOfCharacters = IntroController.instance.charactersInGame;
+            var listOfplayers = IntroController.instance.charactersInGame;
+
+            for (int i = 0; i < listOfplayers.Count; i++)
+            {
+                players[i].ChangeSprite();
+            }
         }
 
         if (AudioManager.instance)
         {
             AudioManager.instance.musicSource.clip = AudioManager.instance.game1;
             AudioManager.instance.musicSource.Play();
+        }
+
+        startPositions = new Vector3[4];
+        foreach (var item in players)
+        {
+            startPositions[item.i] = item.transform.position;
         }
 
     }
@@ -94,17 +143,16 @@ public class Game3Controller : MonoBehaviour
                 if (newState)
                 {
                     newState = false;
-                    amtInLeft = 4;
                     timer = 10f;
 
 
-                    amtInLeft = 0;
-                    amtInRight = 0;
+                    leftPath.Clear();
+                    rightPath.Clear();
                     amtLeft = 4;
 
                     foreach (var item in players)
                     {
-                        item.selectedPath = false;
+                        item.guess = false;
                     }
 
                     PlaceImages();
@@ -121,7 +169,7 @@ public class Game3Controller : MonoBehaviour
 
                 for (int i = 1; i < players.Length; i++)
                 {
-                    if (!players[i].selectedPath)
+                    if (!players[i].guess)
                     {
                         var randomChance = Random.value;
                         if (randomChance < 0.005f)
@@ -130,17 +178,26 @@ public class Game3Controller : MonoBehaviour
 
                             if (randomSide)
                             {
+                                players[i].guess = true;
 
-                                players[i].playerNumberTag.localPosition = leftDoor.localPosition + new Vector3(amtInLeft * 100, 0, 0);
-                                players[i].selectedPath = true;
-                                amtInLeft++;
+                                StartCoroutine(MoveCharacters(players[i], leftDoor.position + Vector3.right * (amtInLeft * 0.45f)));
+
+                                //players[i].transform.position = leftDoor.position + Vector3.right * (amtInLeft * 0.45f);
+                                //players[i].transform.localScale = Vector3.one * 0.35f;
+                                leftPath.Add(players[i]);
+                                
                             }
                             else
                             {
 
-                                players[i].playerNumberTag.localPosition = rightDoor.localPosition + new Vector3(amtInRight * 100, 0, 0);
-                                players[i].selectedPath = true;
-                                amtInRight++;
+                                players[i].guess = true;
+
+                                StartCoroutine(MoveCharacters(players[i], rightDoor.position + Vector3.left * (amtInRight * 0.45f)));
+
+                                //players[i].transform.position = rightDoor.position + Vector3.left * (amtInRight * 0.45f);
+                                //players[i].transform.localScale = Vector3.one * 0.35f;
+                                rightPath.Add(players[i]);
+                                
                             }
                             amtLeft--;
                         }
@@ -164,10 +221,6 @@ public class Game3Controller : MonoBehaviour
                 {
                     newState = false;
 
-                    for (int i = 0; i < players.Length; i++)
-                    {
-                        StartCoroutine(MoveCharacters(players[i]));
-                    }
 
                     timer = 2f;
 
@@ -192,8 +245,14 @@ public class Game3Controller : MonoBehaviour
                         AudioManager.instance.PlayCorrectSound();
                     timer = 2f;
 
-                    checkmark.SetActive(true);
-                    checkmark.transform.localPosition = winningSide ? leftImage.rectTransform.localPosition : rightImage.rectTransform.localPosition;
+                    checkmark.gameObject.SetActive(true);
+                    checkmark.transform.position = winningSide ? leftImage.transform.position : rightImage.transform.position;
+
+                    foreach (var item in winningSide? leftPath:rightPath)
+                    {
+                        item.UpdateScore(10);
+                    }
+
                 }
 
                 timer -= Time.deltaTime;
@@ -230,8 +289,8 @@ public class Game3Controller : MonoBehaviour
         if (gameRunning)
         {
             gameRunning = false;
-            MenuSelection.instance.GoToMenuScene(3f, MenuSelection.instance.selectedMinigame.Scene.name);
-            print(MenuSelection.instance.selectedMinigame.Scene.name);
+            MenuSelection.instance.GoToMenuScene(3f, MenuSelection.instance.selectedMinigame.sceneName);
+            print(MenuSelection.instance.selectedMinigame.sceneName);
             timerText.text = "Finish!";
             //endGame.Play();
         }
@@ -242,10 +301,10 @@ public class Game3Controller : MonoBehaviour
 
     void PlacePlayers()
     {
-        for (int i = 0; i < players.Length; i++)
+        foreach (var item in players)
         {
-            players[i].transform.localPosition = playerStart.localPosition + new Vector3(i * 100, 0);
-            players[i].playerNumberTag.localPosition = players[i].transform.localPosition + new Vector3(0, 200, 0);
+            item.transform.localScale = Vector3.one;
+            item.transform.position = startPositions[item.i];
         }
     }
 
@@ -267,23 +326,24 @@ public class Game3Controller : MonoBehaviour
 
             for (int i = 0; i < players.Length; i++)
             {
-                if (!players[i].selectedPath)
+                if (!players[i].guess)
                 {
                     var randomSide = Random.value < 0.5f ? true : false;
 
                     if (randomSide)
                     {
-
-                        players[i].playerNumberTag.localPosition = leftDoor.localPosition + new Vector3(amtInLeft * 100, 0, 0);
-                        players[i].selectedPath = true;
-                        amtInLeft++;
+                        players[i].guess = true;
+                        players[i].transform.position = leftDoor.position + Vector3.right * (amtInLeft * 0.45f);
+                        players[i].transform.localScale = Vector3.one * 0.35f;
+                        leftPath.Add(players[i]);
                     }
                     else
                     {
 
-                        players[i].playerNumberTag.localPosition = rightDoor.localPosition + new Vector3(amtInRight * 100, 0, 0);
-                        players[i].selectedPath = true;
-                        amtInRight++;
+                        players[i].guess = true;
+                        players[i].transform.position = rightDoor.position + Vector3.left * (amtInLeft * 0.45f);
+                        players[i].transform.localScale = Vector3.one * 0.35f;
+                        rightPath.Add(players[i]);
                     }
                     amtLeft--;
                 }
@@ -295,13 +355,14 @@ public class Game3Controller : MonoBehaviour
 
 
 
-    IEnumerator MoveCharacters(Game3Player player)
+    IEnumerator MoveCharacters(Game1Player player, Vector3 dest)
     {
-        var rect = player.GetComponent<RectTransform>();
 
-        Vector3 startingPos = rect.localPosition;
+        Vector3 startingPos = player.transform.position;
 
-        Vector3 endPos = player.playerNumberTag.localPosition + Vector3.down * 500f;
+        Vector3 endPos = dest;
+
+        //Vector3 endPos = ????
 
         float moveTimer = 0f;
         float percent = 0f;
@@ -312,7 +373,8 @@ public class Game3Controller : MonoBehaviour
 
             percent = moveTimer / movePlayerSpeed;
 
-            rect.localPosition = Vector3.Lerp(startingPos, endPos, movePlayersCurve.Evaluate(percent));
+            player.transform.position = Vector3.Lerp(startingPos, endPos, movePlayersCurve.Evaluate(percent));
+            player.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.one * 0.35f, movePlayersCurve.Evaluate(percent));
 
             yield return null;
         }
@@ -324,10 +386,24 @@ public class Game3Controller : MonoBehaviour
     void PlaceImages()
     {
         winningSide = Random.value < 0.5f ? true : false;
+
+        correctObj = poseToNouns[Random.Range(0, poseToNouns.Count)];
+
+        correctImage = correctObj.obj.sprites[0];
+
+        do
+        {
+            incorrectImage = listOfNouns[Random.Range(0, listOfNouns.Count)].sprites[0];
+        }
+        while (incorrectImage == correctImage);
+
+
         leftImage.sprite = winningSide ? correctImage : incorrectImage;
         rightImage.sprite = winningSide ? incorrectImage : correctImage;
 
-        checkmark.SetActive(false);
+        checkmark.gameObject.SetActive(false);
+
+        action.sprite = correctObj.pose;
     }
 
 }

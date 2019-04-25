@@ -12,7 +12,10 @@ public class Game1Player : MonoBehaviour
     public SpriteRenderer characterRender;
     public CharacterObject character;
     public float waveTimer;
-
+    public string guessWord;
+    public Color textColor;
+    public bool player;
+    public int i;
     void Start()
     {
         score = 0;
@@ -36,14 +39,7 @@ public class Game1Player : MonoBehaviour
             characterRender.sprite = character.waveHandFront[index];
             waveTimer -= Time.deltaTime;
 
-            //if(waveTimer <= 0f)
-            //{
-            //    waving = false;
-            //    characterRender.sprite = character.behind;
 
-            //    score += 10;
-            //    scoreText.text = score.ToString();
-            //}
         }
 
     }
@@ -61,11 +57,23 @@ public class Game1Player : MonoBehaviour
         {
             characterRender.sprite = character.behind;
         }
+        scoreText.color = textColor;
+    }
+
+    public void ChangeSprite(CharacterObject charObj)
+    {
+        character = charObj;
+        if (characterRender && character)
+        {
+            characterRender.sprite = character.behind;
+        }
+        scoreText.color = textColor;
     }
 
 
-    public void StartWaving()
+    public void StartWaving(string word)
     {
+        guessWord = word;
         waving = true;
         waveTimer = Random.Range(1f, 3f);
     }

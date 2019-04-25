@@ -27,10 +27,13 @@ public class Game2Controller : MonoBehaviour
     public TextMeshPro timerText;
     public float timer = 60f;
 
-    public GameObject leftBubble, middleBubble, rightBubble;
-    public RectTransform leftT, midT, rightT;
 
     ///////////////////////////////////////
+
+
+    public SpriteRenderer speechBubble;
+    public Sprite middleBubble, sideBubble;
+    public TextMeshPro bubbleText;
 
     enum Game2State { Demand, Negate, Phrase, Correct, Wrong}
 
@@ -50,7 +53,6 @@ public class Game2Controller : MonoBehaviour
 
     bool newState;
 
-    public GameObject speechBubble;
 
     bool canGuess;
 
@@ -73,6 +75,9 @@ public class Game2Controller : MonoBehaviour
     Game1Player personGuessing;
 
     public AudioSource endGame;
+
+    public TextMeshPro startText;
+
 
     private void Awake()
     {
@@ -116,6 +121,10 @@ public class Game2Controller : MonoBehaviour
 
         i = 1;
 
+        speechBubble.gameObject.SetActive(false);
+
+        ActivateGameObject(startText.gameObject, true);
+
         InitGame();
     }
 
@@ -150,13 +159,16 @@ public class Game2Controller : MonoBehaviour
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            if (!players[i].waving)
-                            {
-                                if (Random.value <= 0.1)
+
+                                if (Random.value <= 0.15)
                                 {
-                                    AIGuess(i);
+                                    SetBubbles(i+1);
+
+                                    gameState = Game2State.Phrase;
+
+                                    phraseTimer = 0f;
+                                    newState = true;
                                 }
-                            }
                         }
                     }
                 }
@@ -185,8 +197,11 @@ public class Game2Controller : MonoBehaviour
                     phraseState = Game2State.Demand;
                     iconImage.color = new Color(1f, 1f, 1f, 0f);
                     iconImageAlpha = 0f;
+                    iconImage.GetComponent<ActionIcon>().Init(listOfActions[Random.Range(0, listOfActions.Count)]);
                     phrase = iconImage.GetComponent<ActionIcon>().action.commandSentence;
                     newState = false;
+
+                    speechBubble.gameObject.SetActive(false);
                 }
 
                 if (iconImage.color.a != 1f)
@@ -259,11 +274,6 @@ public class Game2Controller : MonoBehaviour
                     gameState = phraseState == Game2State.Demand ? Game2State.Negate : Game2State.Demand;
                     iconImage.GetComponent<ActionAnimate>().animate = phraseState == Game2State.Demand ? true : false;
 
-                    if (phraseState == Game2State.Negate)
-                    {
-                        i++;
-                        iconImage.GetComponent<ActionIcon>().Init(listOfActions[i % listOfActions.Count]);
-                    }
                 }
 
             }
@@ -293,15 +303,14 @@ public class Game2Controller : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                recognizedNewWord = false;
 
                 if (gameState == Game2State.Demand || gameState == Game2State.Negate)
                 {
-                    ActivateGameObject(phraseText.gameObject, true);
+
                     SetBubbles(1);
 
                     gameState = Game2State.Phrase;
-                    phraseText.text = "????????";
+
                     phraseTimer = 0f;
                     newState = true;
 
@@ -309,15 +318,15 @@ public class Game2Controller : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.X))
             {
-                recognizedNewWord = false;
+
 
                 if (gameState == Game2State.Demand || gameState == Game2State.Negate)
                 {
-                    ActivateGameObject(phraseText.gameObject, true);
+
                     SetBubbles(2);
 
                     gameState = Game2State.Phrase;
-                    phraseText.text = "????????";
+
                     phraseTimer = 0f;
                     newState = true;
 
@@ -325,15 +334,14 @@ public class Game2Controller : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.C))
             {
-                recognizedNewWord = false;
 
                 if (gameState == Game2State.Demand || gameState == Game2State.Negate)
                 {
-                    ActivateGameObject(phraseText.gameObject, true);
+
                     SetBubbles(3);
 
                     gameState = Game2State.Phrase;
-                    phraseText.text = "????????";
+
                     phraseTimer = 0f;
                     newState = true;
 
@@ -361,10 +369,9 @@ public class Game2Controller : MonoBehaviour
 
     void AIGuess(int i)
     {
-        recognizedNewWord = false;
-
         if ((gameState == Game2State.Demand || gameState == Game2State.Negate))
         {
+            recognizedNewWord = false;
 
             wordRecognized = phrase;
             ActivateGameObject(phraseText.gameObject, true);
@@ -384,9 +391,10 @@ public class Game2Controller : MonoBehaviour
         if (gameRunning)
         {
             gameRunning = false;
-            MenuSelection.instance.GoToMenuScene(3f, MenuSelection.instance.selectedMinigame.Scene.name);
-            print(MenuSelection.instance.selectedMinigame.Scene.name);
-            timerText.text = "Finish!";
+            MenuSelection.instance.GoToMenuScene(3f, MenuSelection.instance.selectedMinigame.sceneName);
+            print(MenuSelection.instance.selectedMinigame.sceneName);
+            ActivateGameObject(startText.gameObject, true);
+            startText.text = "Finish!";
             endGame.Play();
         }
         //StaticVariables.minigame.Scores.Add(points[0]);
@@ -412,34 +420,35 @@ public class Game2Controller : MonoBehaviour
 
     void SetBubbles(int i)
     {
-        if(i == 0)
+        if (i == 0)
         {
-            leftBubble.SetActive(false);
-            middleBubble.SetActive(false);
-            rightBubble.SetActive(false);
-            ActivateGameObject(phraseText.gameObject, false);
+            ActivateGameObject(speechBubble.gameObject, false);
         }
         else if (i == 1)
         {
-            leftBubble.SetActive(true);
-            middleBubble.SetActive(false);
-            rightBubble.SetActive(false);
-            phraseText.rectTransform.position = leftT.position;
+            ActivateGameObject(speechBubble.gameObject, true);
+            speechBubble.sprite = sideBubble;
+            speechBubble.flipX = false;
         }
         else if (i == 2)
         {
-            leftBubble.SetActive(false);
-            middleBubble.SetActive(true);
-            rightBubble.SetActive(false);
-            phraseText.rectTransform.position = midT.position;
+            ActivateGameObject(speechBubble.gameObject, true);
+            speechBubble.sprite = middleBubble;
         }
         else if (i == 3)
         {
-            leftBubble.SetActive(false);
-            middleBubble.SetActive(false);
-            rightBubble.SetActive(true);
-            phraseText.rectTransform.position = rightT.position;
+            ActivateGameObject(speechBubble.gameObject, true);
+            speechBubble.sprite = sideBubble;
+            speechBubble.flipX = true;
         }
+
+        if (i != 0)
+        {
+            wordRecognized = phrase;
+            personGuessing = players[i - 1];
+            bubbleText.text = wordRecognized;
+        }
+
     }
 
 
@@ -465,6 +474,7 @@ public class Game2Controller : MonoBehaviour
         #endregion
 
         gameRunning = true;
+        ActivateGameObject(startText.gameObject, false);
 
     }
 

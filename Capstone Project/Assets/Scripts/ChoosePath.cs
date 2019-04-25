@@ -9,19 +9,24 @@ public class ChoosePath : MonoBehaviour, IPointerDownHandler
     public bool left;
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!ctrl.players[0].selectedPath)
+        if(!ctrl.players[0].guess)
         {
-            RectTransform trans = left ? ctrl.leftDoor : ctrl.rightDoor;
+            Vector3 trans = left ? ctrl.leftDoor.position : ctrl.rightDoor.position;
             var x = left ? ctrl.amtInLeft : ctrl.amtInRight;
-            ctrl.players[0].playerNumberTag.localPosition = trans.localPosition + new Vector3(x * 100, 0, 0);
-            ctrl.players[0].selectedPath = true;
+            ctrl.players[0].guess = true;
             if (left)
             {
-                ctrl.amtInLeft++;
+                ctrl.players[0].guess = true;
+                ctrl.players[0].transform.position = ctrl.leftDoor.position + Vector3.right * (ctrl.amtInLeft * 0.45f);
+                ctrl.players[0].transform.localScale = Vector3.one * 0.35f;
+                ctrl.leftPath.Add(ctrl.players[0]);
             }
             else
             {
-                ctrl.amtInRight++;
+                ctrl.players[0].guess = true;
+                ctrl.players[0].transform.position = ctrl.rightDoor.position + Vector3.left * (ctrl.amtInRight * 0.45f);
+                ctrl.players[0].transform.localScale = Vector3.one * 0.35f;
+                ctrl.rightPath.Add(ctrl.players[0]);
             }
             ctrl.amtLeft--;
         }

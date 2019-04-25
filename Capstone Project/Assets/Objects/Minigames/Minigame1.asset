@@ -17,7 +17,8 @@ MonoBehaviour:
   Name: Minigame 1
   Lesson: Actions
   Thumbnail: {fileID: 21300000, guid: e251f1125df5f3d45b3850473b45134f, type: 3}
-  Scene: {fileID: 102900000, guid: ad87448dbb2af674ca7881bb4e702970, type: 3}
+  sceneName: Game1
   AmountOfPlayers: 4
+  topicString: Present Simple
   TimesPlayed: 4
-  Scores: 0a0000004600000028000000
+  Scores: 280000000000000000000000

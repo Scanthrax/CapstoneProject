@@ -68,10 +68,7 @@ public class VocabReviewController : MonoBehaviour
 
     }
 
-    //private void Update()
-    //{
-    //    ScrollTextBoxes();
-    //}
+
 
 
     public void ScrollTextBoxes()

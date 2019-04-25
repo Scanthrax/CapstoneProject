@@ -15,8 +15,9 @@ public class MinigameObject : ScriptableObject
     public string Name;
     public string Lesson;
     public Sprite Thumbnail;
-    public Object Scene;
+    public string sceneName;
     public int AmountOfPlayers;
+    public string topicString;
 
     public int TimesPlayed;
     private float PlayTime;

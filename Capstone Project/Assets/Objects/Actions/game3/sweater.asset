@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5db330ef39f55da4a90b7cd80053f2aa, type: 3}
-  m_Name: m_wash_hands
+  m_Name: sweater
   m_EditorClassIdentifier: 
-  presentSimpleSentence: He washes his hands.
-  commandSentence: Wash your hands.
-  negateSentence: Don't wash your hands.
+  presentSimpleSentence: sweater
+  commandSentence: 
+  negateSentence: 
   sprites:
-  - {fileID: 21300000, guid: 88d8583669fb6d04c8bde12d43ad21fa, type: 3}
-  - {fileID: 21300002, guid: 88d8583669fb6d04c8bde12d43ad21fa, type: 3}
-  frameRate: 5
+  - {fileID: 21300000, guid: 96b5e5048ff0ff9479a499989bfea2e4, type: 3}
+  frameRate: 0

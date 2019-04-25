@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db330ef39f55da4a90b7cd80053f2aa, type: 3}
   m_Name: m_tie_shoes
   m_EditorClassIdentifier: 
-  presentSimpleSentence: he ties his shoes
-  commandSentence: tie your shoes
-  negateSentence: don't tie your shoes
+  presentSimpleSentence: He ties his shoes.
+  commandSentence: Tie your shoes.
+  negateSentence: Don't tie your shoes.
   sprites:
   - {fileID: 21300000, guid: 50f6f2afa4f471e40b4c4677d2668741, type: 3}
   - {fileID: 21300002, guid: 50f6f2afa4f471e40b4c4677d2668741, type: 3}

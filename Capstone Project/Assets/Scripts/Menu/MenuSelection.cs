@@ -335,7 +335,7 @@ public class MenuSelection : MonoBehaviour
         }
 
         IntroController.instance.enabled = false;
-        SceneManager.LoadScene(selectedMinigame.Scene.name, LoadSceneMode.Additive);
+        SceneManager.LoadScene(selectedMinigame.sceneName, LoadSceneMode.Additive);
         canvas.gameObject.SetActive(false);
 
     }
@@ -454,10 +454,12 @@ public class MenuSelection : MonoBehaviour
 
         vocabCont.UpdateTextBoxes();
 
-        tilte.text = selectedMinigame.name;
-        topic.text = selectedMinigame.topic.ToString();
+        //tilte.text = selectedMinigame.name;
+        topic.text = selectedMinigame.topicString;
 
         var scoreText = "Top 5 Scores:\n";
+        selectedMinigame.Scores.Sort();
+        selectedMinigame.Scores.Reverse();
         for (int i = 0; i < selectedMinigame.Scores.Count; i++)
         {
             scoreText += (i+1) + ": " +  selectedMinigame.Scores[i] + "\n";

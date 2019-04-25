@@ -110,6 +110,9 @@ public class IntroController : MonoBehaviour
         action = 0;
 
 
+        greetScreen.gameObject.SetActive(true);
+        greetScreen.localPosition = Vector3.zero;
+
     }
 
     private void Start()
