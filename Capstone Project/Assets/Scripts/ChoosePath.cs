@@ -17,15 +17,21 @@ public class ChoosePath : MonoBehaviour, IPointerDownHandler
             if (left)
             {
                 ctrl.players[0].guess = true;
-                ctrl.players[0].transform.position = ctrl.leftDoor.position + Vector3.right * (ctrl.amtInLeft * 0.45f);
-                ctrl.players[0].transform.localScale = Vector3.one * 0.35f;
+
+                StartCoroutine(ctrl.MoveCharacters(ctrl.players[0], ctrl.leftDoor.position + Vector3.right * (ctrl.amtInLeft * 0.45f)));
+
+                //players[i].transform.position = leftDoor.position + Vector3.right * (amtInLeft * 0.45f);
+                //players[i].transform.localScale = Vector3.one * 0.35f;
                 ctrl.leftPath.Add(ctrl.players[0]);
             }
             else
             {
                 ctrl.players[0].guess = true;
-                ctrl.players[0].transform.position = ctrl.rightDoor.position + Vector3.left * (ctrl.amtInRight * 0.45f);
-                ctrl.players[0].transform.localScale = Vector3.one * 0.35f;
+
+                StartCoroutine(ctrl.MoveCharacters(ctrl.players[0], ctrl.rightDoor.position + Vector3.left * (ctrl.amtInRight * 0.45f)));
+
+                //players[i].transform.position = rightDoor.position + Vector3.left * (amtInRight * 0.45f);
+                //players[i].transform.localScale = Vector3.one * 0.35f;
                 ctrl.rightPath.Add(ctrl.players[0]);
             }
             ctrl.amtLeft--;

@@ -395,6 +395,7 @@ public class Game2Controller : MonoBehaviour
             print(MenuSelection.instance.selectedMinigame.sceneName);
             ActivateGameObject(startText.gameObject, true);
             startText.text = "Finish!";
+            MenuSelection.instance.selectedMinigame.Scores.Add(players[0].score);
             endGame.Play();
         }
         //StaticVariables.minigame.Scores.Add(points[0]);

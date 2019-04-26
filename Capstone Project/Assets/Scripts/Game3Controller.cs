@@ -74,11 +74,17 @@ public class Game3Controller : MonoBehaviour
 
     public List<Game1Player> leftPath, rightPath;
 
+    public List<Sprite> answerPanels;
+
+    public AudioSource endGameSource;
+
+    public TextMeshPro startText;
+
     [System.Serializable]
     public struct PoseToNoun
     {
         public Sprite pose;
-        public ActionObject obj;
+        public List<Sprite> correctAnswers;
     }
 
 
@@ -95,7 +101,7 @@ public class Game3Controller : MonoBehaviour
         maxRounds = 5;
 
         endGame = false;
-        gameRunning = true;
+        gameRunning = false;
 
         if (MenuSelection.instance)
         {
@@ -109,6 +115,7 @@ public class Game3Controller : MonoBehaviour
 
             for (int i = 0; i < listOfplayers.Count; i++)
             {
+                players[i].character = listOfplayers[i];
                 players[i].ChangeSprite();
             }
         }
@@ -124,6 +131,8 @@ public class Game3Controller : MonoBehaviour
         {
             startPositions[item.i] = item.transform.position;
         }
+
+        InitGame();
 
     }
 
@@ -291,11 +300,12 @@ public class Game3Controller : MonoBehaviour
             gameRunning = false;
             MenuSelection.instance.GoToMenuScene(3f, MenuSelection.instance.selectedMinigame.sceneName);
             print(MenuSelection.instance.selectedMinigame.sceneName);
-            timerText.text = "Finish!";
-            //endGame.Play();
+            startText.gameObject.SetActive(false);
+            startText.text = "Finish!";
+            MenuSelection.instance.selectedMinigame.Scores.Add(players[0].score);
+            endGameSource.Play();
         }
-        //StaticVariables.minigame.Scores.Add(points[0]);
-        //SceneManager.LoadScene(menuScene.name);
+
     }
 
 
@@ -333,16 +343,21 @@ public class Game3Controller : MonoBehaviour
                     if (randomSide)
                     {
                         players[i].guess = true;
-                        players[i].transform.position = leftDoor.position + Vector3.right * (amtInLeft * 0.45f);
-                        players[i].transform.localScale = Vector3.one * 0.35f;
+
+                        StartCoroutine(MoveCharacters(players[i], leftDoor.position + Vector3.right * (amtInLeft * 0.45f)));
+
+                        //players[i].transform.position = leftDoor.position + Vector3.right * (amtInLeft * 0.45f);
+                        //players[i].transform.localScale = Vector3.one * 0.35f;
                         leftPath.Add(players[i]);
                     }
                     else
                     {
-
                         players[i].guess = true;
-                        players[i].transform.position = rightDoor.position + Vector3.left * (amtInLeft * 0.45f);
-                        players[i].transform.localScale = Vector3.one * 0.35f;
+
+                        StartCoroutine(MoveCharacters(players[i], rightDoor.position + Vector3.left * (amtInRight * 0.45f)));
+
+                        //players[i].transform.position = rightDoor.position + Vector3.left * (amtInRight * 0.45f);
+                        //players[i].transform.localScale = Vector3.one * 0.35f;
                         rightPath.Add(players[i]);
                     }
                     amtLeft--;
@@ -355,7 +370,7 @@ public class Game3Controller : MonoBehaviour
 
 
 
-    IEnumerator MoveCharacters(Game1Player player, Vector3 dest)
+    public IEnumerator MoveCharacters(Game1Player player, Vector3 dest)
     {
 
         Vector3 startingPos = player.transform.position;
@@ -389,13 +404,18 @@ public class Game3Controller : MonoBehaviour
 
         correctObj = poseToNouns[Random.Range(0, poseToNouns.Count)];
 
-        correctImage = correctObj.obj.sprites[0];
+        correctImage = correctObj.correctAnswers[Random.Range(0, correctObj.correctAnswers.Count)];
 
-        do
+        incorrectImage = answerPanels[Random.Range(0, answerPanels.Count)];
+
+        for (int i = 0; i < correctObj.correctAnswers.Count; i++)
         {
-            incorrectImage = listOfNouns[Random.Range(0, listOfNouns.Count)].sprites[0];
+            if (incorrectImage == correctImage)
+            {
+                incorrectImage = answerPanels[Random.Range(0, answerPanels.Count)];
+                i = 0;
+            }
         }
-        while (incorrectImage == correctImage);
 
 
         leftImage.sprite = winningSide ? correctImage : incorrectImage;
@@ -404,6 +424,33 @@ public class Game3Controller : MonoBehaviour
         checkmark.gameObject.SetActive(false);
 
         action.sprite = correctObj.pose;
+    }
+
+
+
+    void InitGame()
+    {
+        StartCoroutine(StartGame());
+    }
+
+    IEnumerator StartGame()
+    {
+        #region wait 1 second before starting the game
+        // timer for moving the menu
+        float journey = 0f;
+        float duration = 2f;
+        // keep adjusting the position while there is time
+        while (journey <= duration)
+        {
+            // add to timer
+            journey = journey + Time.deltaTime;
+            yield return null;
+        }
+        #endregion
+
+        gameRunning = true;
+
+        startText.gameObject.SetActive(false);
     }
 
 }

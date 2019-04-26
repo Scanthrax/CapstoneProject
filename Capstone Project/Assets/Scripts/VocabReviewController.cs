@@ -24,12 +24,29 @@ public class VocabReviewController : MonoBehaviour
     public Text selectedText;
     public Sprite empty;
 
+    public Game3Items[] game1Items;
+    public Game3Items[] game2Items;
+    public Game3Items[] game3Items;
 
+
+    Game3Items[] vocabDisplay;
+
+
+    public Text topicText;
+
+    [System.Serializable]
+    public struct Game3Items
+    {
+        public string sentence;
+        public Sprite image;
+    }
 
     private void Start()
     {
         vocabImage.sprite = empty;
         selectedText.text = "";
+
+        vocabDisplay = game1Items;
     }
 
 
@@ -39,32 +56,55 @@ public class VocabReviewController : MonoBehaviour
 
 
 
+        //switch (vocabType)
+        //{
+        //    case Topic.PresentSimple:
+
+        //        for (int i = 0; i < listOfActionObjects.Count; i++)
+        //        {
+        //            listOfTextBoxes[i].text = listOfActionObjects[i].presentSimpleSentence;
+        //        }
+        //        break;
+        //    case Topic.Commands:
+        //        for (int i = 0; i < listOfActionObjects.Count; i++)
+        //        {
+        //            listOfTextBoxes[i].text = listOfActionObjects[i].commandSentence;
+        //        }
+        //        break;
+        //    case Topic.PastSimple:
+        //        for (int i = 0; i < listOfActionObjects.Count; i++)
+        //        {
+        //            listOfTextBoxes[i].text = listOfActionObjects[i].negateSentence;
+        //        }
+        //        break;
+        //    default:
+        //        break;
+        //}
+
+
+
         switch (vocabType)
         {
             case Topic.PresentSimple:
-                for (int i = 0; i < listOfActionObjects.Count; i++)
-                {
-                    listOfTextBoxes[i].text = listOfActionObjects[i].presentSimpleSentence;
-                }
+                vocabDisplay = game1Items;
+                topicText.text = "Present Simple";
                 break;
             case Topic.Commands:
-                for (int i = 0; i < listOfActionObjects.Count; i++)
-                {
-                    listOfTextBoxes[i].text = listOfActionObjects[i].commandSentence;
-                }
+                vocabDisplay = game2Items;
+                topicText.text = "Commands";
                 break;
             case Topic.PastSimple:
-                for (int i = 0; i < listOfActionObjects.Count; i++)
-                {
-                    listOfTextBoxes[i].text = listOfActionObjects[i].negateSentence;
-                }
+                vocabDisplay = game3Items;
+                topicText.text = "Past Simple";
                 break;
             default:
                 break;
         }
 
-
-
+        for (int i = 0; i < 5; i++)
+        {
+            listOfTextBoxes[i].text = vocabDisplay[i].sentence;
+        }
 
     }
 
@@ -79,25 +119,8 @@ public class VocabReviewController : MonoBehaviour
 
     public void ChangeImage(int i)
     {
-        string temp = "";
-        switch (vocabType)
-        {
-            case Topic.PresentSimple:
-                    temp = listOfActionObjects[i].presentSimpleSentence;
-                break;
-            case Topic.Commands:
-                    temp = listOfActionObjects[i].commandSentence;
-                break;
-            case Topic.PastSimple:
-                    temp = listOfActionObjects[i].negateSentence;
-                break;
-            default:
-                break;
-        }
-
-
-        vocabImage.sprite = listOfActionObjects[i].sprites[0];
-        selectedText.text = temp;
+        vocabImage.sprite = vocabDisplay[i].image;
+        selectedText.text = vocabDisplay[i].sentence;
     }
 
 }
