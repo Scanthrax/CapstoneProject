@@ -460,7 +460,8 @@ public class MenuSelection : MonoBehaviour
         var scoreText = "Top 5 Scores:\n";
         selectedMinigame.Scores.Sort();
         selectedMinigame.Scores.Reverse();
-        for (int i = 0; i < selectedMinigame.Scores.Count; i++)
+        print("minigame " + selectedMinigame.Name + " has " + selectedMinigame.Scores.Count + " scores");
+        for (int i = 0; i < Mathf.Min(5, selectedMinigame.Scores.Count); i++)
         {
             scoreText += (i+1) + ": " +  selectedMinigame.Scores[i] + "\n";
         }
