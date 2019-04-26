@@ -16,6 +16,6 @@ MonoBehaviour:
   commandSentence: Dry your hands.
   negateSentence: Don't dry your hands.
   sprites:
-  - {fileID: 21300000, guid: ef2c840820feb924987a0b1d16dba783, type: 3}
-  - {fileID: 21300002, guid: ef2c840820feb924987a0b1d16dba783, type: 3}
+  - {fileID: 21300000, guid: ace89df1de596e045a7a60f0f85bc013, type: 3}
+  - {fileID: 21300002, guid: ace89df1de596e045a7a60f0f85bc013, type: 3}
   frameRate: 5

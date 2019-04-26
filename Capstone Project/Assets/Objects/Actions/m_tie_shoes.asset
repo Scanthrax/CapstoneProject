@@ -16,6 +16,6 @@ MonoBehaviour:
   commandSentence: Tie your shoes.
   negateSentence: Don't tie your shoes.
   sprites:
-  - {fileID: 21300000, guid: 50f6f2afa4f471e40b4c4677d2668741, type: 3}
-  - {fileID: 21300002, guid: 50f6f2afa4f471e40b4c4677d2668741, type: 3}
+  - {fileID: 21300000, guid: 7892af80a95d60c4ba2f3f2861964d4b, type: 3}
+  - {fileID: 21300002, guid: 7892af80a95d60c4ba2f3f2861964d4b, type: 3}
   frameRate: 3
