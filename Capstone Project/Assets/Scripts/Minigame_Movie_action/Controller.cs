@@ -34,6 +34,27 @@ public class Controller : MonoBehaviour
 
     public Dictionary<string, List<GameObject>> wordToObject;
 
+    public Dictionary<string, WordSelection> wordSelected;
+
+
+    public struct WordSelection
+    {
+        public bool selected;
+        public Game1Player player;
+
+        public void Deselect()
+        {
+            selected = false;
+        }
+
+        public WordSelection(bool selected, Game1Player player)
+        {
+            this.selected = selected;
+            this.player = player;
+        }
+
+    }
+
     float duration = 2f;
 
     float speed;
@@ -70,6 +91,11 @@ public class Controller : MonoBehaviour
         public TextMeshPro bubbleText;
     }
 
+
+
+    public TextMeshPro pointAddPrefab;
+
+
     private void Awake()
     {
         instance = this;
@@ -81,11 +107,12 @@ public class Controller : MonoBehaviour
     void Start ()
     {
         wordToObject = new Dictionary<string, List<GameObject>>();
+        wordSelected = new Dictionary<string, WordSelection>();
 
         switch (difficulty)
         {
             case Difficulty.Easy:
-                speed = 0.75f;
+                speed = 0.2f;
                 break;
             case Difficulty.Intermediate:
                 speed = 1f;
@@ -135,6 +162,19 @@ public class Controller : MonoBehaviour
             players[i].ChangeSprite();
         }
 
+        foreach (var item in actionObjects)
+        {
+            wordSelected.Add(item.presentSimpleSentence, new WordSelection());
+            wordToObject.Add(item.presentSimpleSentence, new List<GameObject>());
+        }
+
+        for (int i = 0; i < bubbles.Length; i++)
+        {
+            bubbles[i].speechBubble.SetActive(false);
+            bubbles[i].speechBubble.GetComponent<SpriteRenderer>().color = players[i].character.color;
+        }
+
+
         InitGame();
 
 
@@ -147,10 +187,11 @@ public class Controller : MonoBehaviour
 
 
 
-        foreach (var item in bubbles)
-        {
-            item.speechBubble.SetActive(false);
-        }
+
+
+
+
+
     }
 	
 
@@ -176,48 +217,26 @@ public class Controller : MonoBehaviour
             timer = 2f;
         }
 
-        if (recognizedNewWord)
-        {
-            recognizedNewWord = false;
-            if (wordToObject.ContainsKey(wordRecognized))
-            {
-                PlaySoundCorrect();
-                for (int i = 0; i < wordToObject[wordRecognized].Count; i++)
-                {
-                    players[0].StartWaving(wordbank[Random.Range(0,5)]);
-                }
-                
-            }
-
-        }
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            players[0].StartWaving(wordbank[Random.Range(0, 5)]);
-            bubbles[0].speechBubble.SetActive(true);
-            bubbles[0].bubbleText.text = players[0].guessWord;
+            MakeGuess(0);
 
         }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            players[1].StartWaving(wordbank[Random.Range(0, 5)]);
-            bubbles[1].speechBubble.SetActive(true);
-            bubbles[1].bubbleText.text = players[1].guessWord;
+            MakeGuess(1);
 
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
-            players[2].StartWaving(wordbank[Random.Range(0, 5)]);
-            bubbles[2].speechBubble.SetActive(true);
-            bubbles[2].bubbleText.text = players[2].guessWord;
+            MakeGuess(2);
 
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
-            players[3].StartWaving(wordbank[Random.Range(0, 5)]);
-            bubbles[3].speechBubble.SetActive(true);
-            bubbles[3].bubbleText.text = players[3].guessWord;
+            MakeGuess(3);
         }
 
         if (gameRunning)
@@ -235,15 +254,13 @@ public class Controller : MonoBehaviour
         {
             if (Time.frameCount % 60 == 0)
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 1; i < 4; i++)
                 {
                     if (!players[i].waving)
                     {
                         if (Random.value <= 0.1)
                         {
-                            players[i].StartWaving(wordbank[Random.Range(0, 5)]);
-                            bubbles[i].speechBubble.SetActive(true);
-                            bubbles[i].bubbleText.text = players[i].guessWord;
+                            MakeGuess(i);
                         }
                     }
                 }
@@ -261,17 +278,32 @@ public class Controller : MonoBehaviour
 
                     bubbles[item.i].speechBubble.SetActive(false);
 
+                    wordSelected[item.guessWord] = new WordSelection(false, wordSelected[item.guessWord].player);
+                    /////////////////////////////////////////////////////////////////////////////
+                    print(wordSelected[item.guessWord].selected);
+
                     if (wordToObject.ContainsKey(item.guessWord))
                     {
                         var tempList = new List<GameObject>();
+
+                        var pointsAdded = Instantiate(pointAddPrefab, item.scoreText.transform.position + Vector3.up * 0.5f, Quaternion.identity);
+                        var pointAmt = 0;
+                        pointsAdded.text = "";
+                        pointsAdded.color = item.character.color;
+
                         foreach (var action in wordToObject[item.guessWord])
                         {
                             item.score += 10;
+                            pointAmt += 10;
                             var particles = Instantiate(correctParticles, action.transform.position, Quaternion.Euler(-90,0,0),action.transform.parent);
+                            particles.startColor = item.character.color;
                             particles.Play();
                             Destroy(particles.gameObject, 2f);
                             tempList.Add(action);
                         }
+
+                        if(pointAmt != 0)
+                            pointsAdded.text = "+" + pointAmt.ToString();
 
                         if(wordToObject[item.guessWord].Count > 0)
                             PlaySoundCorrect();
@@ -280,8 +312,10 @@ public class Controller : MonoBehaviour
                         {
                             wordToObject[item.guessWord].Remove(it);
                             Destroy(it.gameObject);
+
                             SpawnAction();
                         }
+                        
                     }
 
                     item.scoreText.text = item.score.ToString();
@@ -386,11 +420,49 @@ public class Controller : MonoBehaviour
 
         var sentence = obj.actionObj.presentSimpleSentence;
 
-        if (!wordToObject.ContainsKey(sentence))
-        {
-            wordToObject.Add(sentence, new List<GameObject>());
-        }
         wordToObject[sentence].Add(obj.gameObject);
+
+
+        if(wordSelected[sentence].selected)
+        {
+            print("spawning with circle");
+            obj.ShowCircle(wordSelected[sentence].player.character.color);
+        }
+    }
+
+
+    public void MakeGuess(int i)
+    {
+
+        players[i].StartWaving(wordbank[Random.Range(0, 5)]);
+        bubbles[i].speechBubble.SetActive(true);
+        bubbles[i].bubbleText.text = players[i].guessWord;
+
+        if (!wordSelected[players[i].guessWord].selected)
+        {
+            foreach (var item in wordToObject[players[i].guessWord])
+            {
+                item.GetComponent<movement>().ShowCircle(players[i].character.color);
+            }
+        }
+        wordSelected[players[i].guessWord] = new WordSelection(true, players[i]);
+    }
+
+    public void MakeGuess(string word)
+    {
+
+        players[0].StartWaving(word);
+        bubbles[0].speechBubble.SetActive(true);
+        bubbles[0].bubbleText.text = players[0].guessWord;
+
+        if (!wordSelected[players[0].guessWord].selected)
+        {
+            foreach (var item in wordToObject[players[0].guessWord])
+            {
+                item.GetComponent<movement>().ShowCircle(players[0].character.color);
+            }
+        }
+        wordSelected[players[0].guessWord] = new WordSelection(true, players[0]);
     }
 
 }

@@ -39,7 +39,12 @@ public class VocabReviewController : MonoBehaviour
     {
         public string sentence;
         public Sprite image;
+        public AudioClip audio;
     }
+
+
+
+    public AudioSource voiceSource;
 
     private void Start()
     {
@@ -121,6 +126,9 @@ public class VocabReviewController : MonoBehaviour
     {
         vocabImage.sprite = vocabDisplay[i].image;
         selectedText.text = vocabDisplay[i].sentence;
+
+        voiceSource.clip = vocabDisplay[i].audio;
+        voiceSource.Play();
     }
 
 }

@@ -15,6 +15,7 @@ public class movement : MonoBehaviour {
 
     SpriteRenderer renderer;
 
+    public SpriteRenderer circle;
 
     private void Start()
     {
@@ -56,7 +57,15 @@ public class movement : MonoBehaviour {
         framesPerSecond = actionObj.frameRate;
     }
 
+    public void ShowCircle(Color color)
+    {
+        circle.enabled = true;
+        circle.color = color;
+    }
 
-
+    public void HideCircle()
+    {
+        circle.enabled = false;
+    }
 
 }

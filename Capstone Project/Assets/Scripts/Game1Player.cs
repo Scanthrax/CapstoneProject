@@ -57,7 +57,7 @@ public class Game1Player : MonoBehaviour
         {
             characterRender.sprite = character.behind;
         }
-        scoreText.color = textColor;
+        scoreText.color = character.color;
     }
 
     public void ChangeSprite(CharacterObject charObj)
@@ -67,7 +67,7 @@ public class Game1Player : MonoBehaviour
         {
             characterRender.sprite = character.behind;
         }
-        scoreText.color = textColor;
+        scoreText.color = character.color;
     }
 
 
@@ -75,7 +75,7 @@ public class Game1Player : MonoBehaviour
     {
         guessWord = word;
         waving = true;
-        waveTimer = Random.Range(1f, 3f);
+        waveTimer = 2f;
     }
 
 }

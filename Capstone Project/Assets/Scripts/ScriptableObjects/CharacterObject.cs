@@ -11,4 +11,5 @@ public class CharacterObject : ScriptableObject
     public Sprite[] waveHandFront;
     public Sprite front, behind;
     public Sprite silhouette;
+    public Color color;
 }

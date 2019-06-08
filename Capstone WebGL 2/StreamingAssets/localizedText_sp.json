@@ -1,0 +1,27 @@
+{
+	"items":
+	[
+		{"key":"welcome greet","value":"Bienvenido a la aplicación de aprendizaje de idiomas Burke"},
+		{"key":"welcome congrats","value":"Felicitaciones por comenzar su nuevo y emocionante viaje al mundo de los idiomas"},
+
+		{"key":"select difficulty","value":"Por favor seleccione una dificultad de idioma"},
+		{"key":"beginner","value":"principiante"},
+		{"key":"pre intermediate","value":"pre intermedio"},
+		{"key":"low intermediate","value":"intermedio bajo"},
+		{"key":"intermediate","value":"intermedio"},
+		{"key":"upper intermediate","value":"intermedio superior"},
+		{"key":"advanced","value":"avanzado"},
+
+		
+
+		{"key":"he ties his shoes","value":"hello"},
+		{"key":"she brushes her hair","value":"world"},
+
+
+
+		
+		{"key":"he ties his shoes_TEMP","value":"el ata los zapatos"},
+		{"key":"she brushes her hair_TEMP","value":"ella cepilla el pelo"}
+
+	]
+}

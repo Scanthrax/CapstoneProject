@@ -21,6 +21,7 @@ public class MenuSelection : MonoBehaviour
     }
 
 
+    public GameObject camera;
 
     /// <summary>
     /// Directions for the menu transitions
@@ -337,6 +338,7 @@ public class MenuSelection : MonoBehaviour
         IntroController.instance.enabled = false;
         SceneManager.LoadScene(selectedMinigame.sceneName, LoadSceneMode.Additive);
         canvas.gameObject.SetActive(false);
+        camera.SetActive(false);
 
     }
 
@@ -376,6 +378,7 @@ public class MenuSelection : MonoBehaviour
         startingMenu = Menu.MinigameSelect;
         currentMenu = startingMenu;
         MenuInit();
+        camera.SetActive(true);
 
     }
 

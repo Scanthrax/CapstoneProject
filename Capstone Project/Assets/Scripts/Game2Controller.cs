@@ -28,6 +28,9 @@ public class Game2Controller : MonoBehaviour
     public float timer = 60f;
 
 
+    public TextMeshPro addPointsPrefab;
+
+
     ///////////////////////////////////////
 
 
@@ -77,6 +80,8 @@ public class Game2Controller : MonoBehaviour
     public AudioSource endGame;
 
     public TextMeshPro startText;
+
+    //public GameObject addScorePrefab;
 
 
     private void Awake()
@@ -157,10 +162,10 @@ public class Game2Controller : MonoBehaviour
                 {
                     if (Time.frameCount % 60 == 0)
                     {
-                        for (int i = 0; i < 3; i++)
+                        for (int i = 1; i < 3; i++)
                         {
 
-                                if (Random.value <= 0.15)
+                                if (Random.value <= 0.155)
                                 {
                                     SetBubbles(i+1);
 
@@ -253,7 +258,8 @@ public class Game2Controller : MonoBehaviour
                     phraseTime = 1f;
                     FullAlpha();
                     personGuessing.UpdateScore(10);
-
+                    var addPoints = Instantiate(addPointsPrefab, personGuessing.scoreText.transform.position + Vector3.up * 0.5f, Quaternion.identity);
+                    addPoints.color = personGuessing.character.color;
                     if (phraseState == Game2State.Negate)
                     {
                         ActivateGameObject(noSign, false);
@@ -303,50 +309,20 @@ public class Game2Controller : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
-
-                if (gameState == Game2State.Demand || gameState == Game2State.Negate)
-                {
-
-                    SetBubbles(1);
-
-                    gameState = Game2State.Phrase;
-
-                    phraseTimer = 0f;
-                    newState = true;
-
-                }
+                MakeGuess(1);
             }
             if (Input.GetKeyDown(KeyCode.X))
             {
 
 
-                if (gameState == Game2State.Demand || gameState == Game2State.Negate)
-                {
-
-                    SetBubbles(2);
-
-                    gameState = Game2State.Phrase;
-
-                    phraseTimer = 0f;
-                    newState = true;
-
-                }
+                MakeGuess(2);
             }
             if (Input.GetKeyDown(KeyCode.C))
             {
 
-                if (gameState == Game2State.Demand || gameState == Game2State.Negate)
-                {
-
-                    SetBubbles(3);
-
-                    gameState = Game2State.Phrase;
-
-                    phraseTimer = 0f;
-                    newState = true;
-
-                }
+                MakeGuess(3);
             }
+
 
             if (Input.GetKeyDown(KeyCode.V))
             {
@@ -369,7 +345,7 @@ public class Game2Controller : MonoBehaviour
 
     void AIGuess(int i)
     {
-        if ((gameState == Game2State.Demand || gameState == Game2State.Negate))
+        if ((gameState == Game2State.Demand || gameState == Game2State.Negate) && canGuess)
         {
             recognizedNewWord = false;
 
@@ -452,6 +428,19 @@ public class Game2Controller : MonoBehaviour
 
     }
 
+    void SetBubbles(string word)
+    {
+
+        ActivateGameObject(speechBubble.gameObject, true);
+        speechBubble.sprite = sideBubble;
+        speechBubble.flipX = false;
+        
+
+        wordRecognized = word;
+        personGuessing = players[0];
+        bubbleText.text = wordRecognized;
+
+    }
 
 
     void InitGame()
@@ -479,5 +468,33 @@ public class Game2Controller : MonoBehaviour
 
     }
 
+    public void MakeGuess(int i)
+    {
+        if (gameState == Game2State.Demand || gameState == Game2State.Negate)
+        {
 
+            SetBubbles(i);
+
+            gameState = Game2State.Phrase;
+
+            phraseTimer = 0f;
+            newState = true;
+
+        }
+    }
+
+    public void MakeGuess(string word)
+    {
+        if (gameState == Game2State.Demand || gameState == Game2State.Negate)
+        {
+
+            SetBubbles(word);
+
+            gameState = Game2State.Phrase;
+
+            phraseTimer = 0f;
+            newState = true;
+
+        }
+    }
 }

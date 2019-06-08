@@ -7,6 +7,8 @@ using TMPro;
 public class Game3Controller : MonoBehaviour
 {
 
+    public static Game3Controller instance;
+
     public enum Game3State { Choosing, ChoosingPause, DisplayAnswer}
 
     public SpriteRenderer action;
@@ -75,7 +77,7 @@ public class Game3Controller : MonoBehaviour
     public List<Game1Player> leftPath, rightPath;
 
     public List<Sprite> answerPanels;
-
+    public List<string> answerWords;
     public AudioSource endGameSource;
 
     public TextMeshPro startText;
@@ -85,12 +87,21 @@ public class Game3Controller : MonoBehaviour
     {
         public Sprite pose;
         public List<Sprite> correctAnswers;
+        public List<string> correctWord;
     }
 
+    public GameObject addPointsPrefab;
+
+    public string correctWord, incorrectWord;
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
-
 
 
 
@@ -260,6 +271,9 @@ public class Game3Controller : MonoBehaviour
                     foreach (var item in winningSide? leftPath:rightPath)
                     {
                         item.UpdateScore(10);
+                        var temp = Instantiate(addPointsPrefab, item.scoreText.transform.position, Quaternion.identity);
+                        temp.transform.localScale = Vector3.one * 0.5f;
+                        temp.GetComponent<TextMeshPro>().color = item.character.color;
                     }
 
                 }
@@ -367,7 +381,37 @@ public class Game3Controller : MonoBehaviour
     }
 
 
+    public void MakeGuess(string word)
+    {
+        if (!string.Equals(word, correctWord) && !string.Equals(word, incorrectWord)) return;
 
+
+        var choice = string.Equals(word, correctWord) ? winningSide : !winningSide;
+
+
+        if (!players[0].guess)
+        {
+            Vector3 trans = choice ? leftDoor.position :rightDoor.position;
+            var x = choice ? amtInLeft : amtInRight;
+            players[0].guess = true;
+            if (choice)
+            {
+                players[0].guess = true;
+
+                StartCoroutine(MoveCharacters(players[0], leftDoor.position + Vector3.right * (amtInLeft * 0.45f)));
+                leftPath.Add(players[0]);
+            }
+            else
+            {
+                players[0].guess = true;
+
+                StartCoroutine(MoveCharacters(players[0], rightDoor.position + Vector3.left * (amtInRight * 0.45f)));
+
+                rightPath.Add(players[0]);
+            }
+            amtLeft--;
+        }
+    }
 
 
     public IEnumerator MoveCharacters(Game1Player player, Vector3 dest)
@@ -404,9 +448,14 @@ public class Game3Controller : MonoBehaviour
 
         correctObj = poseToNouns[Random.Range(0, poseToNouns.Count)];
 
-        correctImage = correctObj.correctAnswers[Random.Range(0, correctObj.correctAnswers.Count)];
 
-        incorrectImage = answerPanels[Random.Range(0, answerPanels.Count)];
+        var randIndexForCorrect = Random.Range(0, correctObj.correctAnswers.Count);
+        correctImage = correctObj.correctAnswers[randIndexForCorrect];
+
+
+        var randIndexForIncorrect = Random.Range(0, answerPanels.Count);
+        incorrectImage = answerPanels[randIndexForIncorrect];
+
 
         for (int i = 0; i < correctObj.correctAnswers.Count; i++)
         {
@@ -416,6 +465,11 @@ public class Game3Controller : MonoBehaviour
                 i = 0;
             }
         }
+
+
+
+        correctWord = correctObj.correctWord[correctObj.correctAnswers.IndexOf(correctImage)];
+        incorrectWord = answerWords[answerPanels.IndexOf(incorrectImage)];
 
 
         leftImage.sprite = winningSide ? correctImage : incorrectImage;

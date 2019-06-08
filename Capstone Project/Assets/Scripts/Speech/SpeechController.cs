@@ -6,55 +6,9 @@
 //using UnityEngine.Windows.Speech;
 //using UnityEngine.UI;
 
-//public struct Sentence
+
+//public class SpeechController : MonoBehaviour
 //{
-//    private string[] _sentence;
-
-//    public int Length { get { return _sentence.Length; } }
-
-//    public Sentence(int i)
-//    {
-//        _sentence = new string[i];
-//    }
-
-//    void ClearSentence()
-//    {
-//        for (int i = 0; i < _sentence.Length - 1; i++)
-//        {
-//            _sentence[i] = "";
-//        }
-//    }
-
-//    bool isEmpty()
-//    {
-//        return _sentence[0] == "";
-//    }
-//    bool isEmpty(int i)
-//    {
-//        return _sentence[i] == "";
-//    }
-
-//    public void SetWord(int i, string s)
-//    {
-//        _sentence[i] = s;
-//    }
-
-//    public string Print()
-//    {
-//        var temp = "";
-
-//        for (int i = 0; i < _sentence.Length; i++)
-//        {
-//            if (isEmpty(i)) break;
-//            var space = " ";
-//            if (i == 0 || i == _sentence.Length) space = "";
-//            temp = string.Concat(temp, space, _sentence[i]);
-//        }
-//        return temp;
-//    }
-//}
-
-//public class SpeechController : MonoBehaviour {
 
 //    string[] keywords;
 //    public ConfidenceLevel confidence = ConfidenceLevel.Low;
@@ -62,9 +16,9 @@
 
 //    KeywordRecognizer recognizer;
 
-    
 
-//    void Start ()
+
+//    void Start()
 //    {
 //        //if there are action objects, make an array of strings
 //        if (Controller.instance.actionObjects.Length > 0)
@@ -73,7 +27,7 @@
 
 //            for (int i = 0; i < keywords.Length; i++)
 //            {
-//                keywords[i] = Controller.instance.actionObjects[i].sentence;
+//                keywords[i] = Controller.instance.actionObjects[i].presentSimpleSentence;
 //                print(keywords[i]);
 //            }
 
@@ -101,8 +55,7 @@
 //        //translates the result into text
 //        var word = args.text;
 
-//        Controller.instance.recognizedNewWord = true;
-//        Controller.instance.wordRecognized = word;
+//        Controller.instance.MakeGuess(word);
 
 //        print("Recognized: " + word);
 //    }

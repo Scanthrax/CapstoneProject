@@ -28,9 +28,24 @@
 
 //    void Start()
 //    {
-//        recognizer = new KeywordRecognizer(keywords, confidence);
-//        recognizer.OnPhraseRecognized += Recognizer_OnPhraseRecognized;
-//        recognizer.Start();
+//        //if there are action objects, make an array of strings
+//        if (Game2Controller.instance.listOfActions.Count > 0)
+//        {
+//            List<string> tempList = new List<string>();
+
+//            for (int i = 0; i < Game2Controller.instance.listOfActions.Count; i++)
+//            {
+//                tempList.Add(Game2Controller.instance.listOfActions[i].commandSentence);
+//                tempList.Add(Game2Controller.instance.listOfActions[i].negateSentence);
+//            }
+
+//            keywords = tempList.ToArray();
+//            recognizer = new KeywordRecognizer(keywords, confidence);
+//            recognizer.OnPhraseRecognized += Recognizer_OnPhraseRecognized;
+//            recognizer.Start();
+//        }
+//        else
+//            print("NO KEYWORDS");
 //    }
 
 
@@ -49,8 +64,7 @@
 //        //translates the result into text
 //        var word = args.text;
 
-//        Game2Controller.instance.recognizedNewWord = true;
-//        Game2Controller.instance.wordRecognized = word;
+//        Game2Controller.instance.MakeGuess(word);
 
 //        print("Recognized: " + word);
 //    }

@@ -68,3 +68,4 @@ MonoBehaviour:
   front: {fileID: 21300000, guid: dc35ff600bab3224a9f79f96d9dccf91, type: 3}
   behind: {fileID: 21300000, guid: 2648669fa710d1c4d8bbf24efd703505, type: 3}
   silhouette: {fileID: 21300000, guid: 1222b4d9085b7664d81c0b7d57803370, type: 3}
+  color: {r: 0.9894879, g: 0.8018868, b: 1, a: 1}
