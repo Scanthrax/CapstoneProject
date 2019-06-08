@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c447cd1f32f6c54f921b4a3a0f1df0d, type: 3}
+  m_Name: Green Male
+  m_EditorClassIdentifier: 
+  name: Marcus
+  country: United States
+  waveHandFront:
+  - {fileID: 21300000, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300002, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300004, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300006, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300008, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300010, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300012, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300014, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300016, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300018, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300020, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300022, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300024, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300026, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300028, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300030, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300032, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300034, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300036, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300038, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300040, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300042, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300044, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300046, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300048, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300050, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300052, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300054, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300056, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300058, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300060, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300062, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300064, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300066, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300068, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300070, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300072, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300074, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300076, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300078, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300080, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300082, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300084, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300086, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300088, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300090, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300092, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300094, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300096, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  - {fileID: 21300098, guid: 81b67dc9ef88e0a4cb74cacab5b4a5d4, type: 3}
+  front: {fileID: 21300000, guid: d53131df69fb51a4ab6f19b01ea5e0d5, type: 3}
+  behind: {fileID: 21300000, guid: 94d4861d0b96b3d47b34f003a58d3fe1, type: 3}
+  silhouette: {fileID: 21300000, guid: 2445c663dee00f7479329dcd1ac7fe1e, type: 3}
+  color: {r: 0, g: 0.49056602, b: 0, a: 1}
