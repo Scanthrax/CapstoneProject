@@ -1,12 +1,1 @@
 https://simmer.io/@rweeden/~ca6e708d-36d7-a77a-df67-edd560154800
-
-NOTES:
-
-THERE IS AN AUDIO JUMPSCARE when the user opens the wordbank for the first minigame.  This was (obviously) not intended.  The intent was to have the word bank phrases said aloud.  This was not completed for the other minigames
-
-The speech recognition does not function on the web app.  It does function in Unity; however, it will not function if you build it outside of a windows environment (eg. Android, iOS, Mac, etc).  This is because Unity's speech-recognition namespace is not compatible with these other platforms.
-
-Since the webapp doesn't have speech rec, the games can be played by clicking on the player(s) or points of interest.
-keyboard keys ZXCV control players 1 through 4 respectively.  hitting P will reduce the minigame timer to 2seconds; a shortcut to skip to the end of the minigame
-
-In order to build it to iOS, you need an apple computer (I learned this the hard way)
